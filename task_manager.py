@@ -66,7 +66,7 @@ def change_temp_script(name, load):
         if 'LOAD' in lines[i]:
             lines[i] = lines[i].replace('LOAD', load)
         if 'CONFIG_LOC' in lines[i]:
-            lines[i] = lines[i].replace('CONFIG_LOC', load)
+            lines[i] = lines[i].replace('CONFIG_LOC', CONFIG_LOC)
             
             
     with open('temp.script', 'w') as f:
