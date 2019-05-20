@@ -1,3 +1,11 @@
+temp.script
+Ev_Search/Data/
+*.o* #Vacc output files
+nohup.out
+*.pkl
+*.jpg
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

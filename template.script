@@ -1,0 +1,7 @@
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=MAX_RUN_TIME:00:00
+#PBS -N REPLACE
+#PBS -j oe   
+cd EV_SEARCH_LOCATION
+python Search.py "REPLACE.pkl" LOAD
+
