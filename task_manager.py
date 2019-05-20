@@ -148,6 +148,7 @@ elif config['preloaded']:
 else:
     init_jobs('0')
 
+sys.stdout.flush()
 save_progress()
   
 #MAIN LOOP

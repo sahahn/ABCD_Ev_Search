@@ -22,12 +22,18 @@ class Population():
         self.eval_times = []
 
     def Get_Best_Score(self):
+        return max([indv.score for indv in self.individuals if indv.score != None])
 
-        scores = [indv.score for indv in self.individuals if indv.score != None]
-        return max(scores)
+    def Get_Mean_Key_Size(self):
+        return np.mean([len(indv.keys) for indv in self.individuals if indv.score != None])
+
+    def Get_Mean_Eval_Time(self):
+        return np.mean(self.eval_times)
+
+    def Get_Num_Gens(self):
+        return len(self.best_over_time)
 
     def add_best(self):
-        
         self.best_over_time.append(self.Get_Best_Score())        
 
     def Evaluate(self, type='None'):
@@ -67,15 +73,6 @@ class Population():
             
         for i in range(self.new_rand):
             self.individuals.append(Key_Set())
-
-
-    def Get_Mean_Eval_Time(self):
-        
-        return np.mean(self.eval_times)
-
-    def Get_Num_Gens(self):
-
-        return len(self.best_over_time)
 
     def Print_Scores(self):
         '''Print out all indiviudals with scores '''

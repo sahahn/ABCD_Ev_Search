@@ -77,8 +77,8 @@ class Analysis():
             pop = self.pops[cnt]
             cnt += 1
             
-            n_gens, score = pop.Get_Num_Gens(), pop.Get_Best_Score()
-            print('Pop', i, ': num gens -', n_gens, 'score -', score)
+            n_gens, score, size = pop.Get_Num_Gens(), pop.Get_Best_Score(), pop.Get_Mean_Key_Size()
+            print('Pop -', i, 'Num Gens: ', n_gens, 'Score:', score, 'Mean Size:', size)
 
     def Plot_Best_By_Generation(self):
 
