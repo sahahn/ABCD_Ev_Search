@@ -8,14 +8,15 @@ Created on May something 20 something
 
 import pickle, os, argparse
 import numpy as np
-from Population import Population
-from Key_Set import Key_Set
-from config import config
 import matplotlib.pyplot as plt
+from Ev_Search.Population import Population
+from Ev_Search.Key_Set import Key_Set
 
 class Analysis():
 
-    def __init__(self):
+    def __init__(self, config):
+
+        self.config = config
         
         self.pops = []
         self.key_sets = []
@@ -24,9 +25,10 @@ class Analysis():
         self.load_all_key_sets()
 
     def load_all_populations(self):
+        config = self.config
 
         for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
-            pop_name = os.path.join(config['key_dr'], config['key_name'] + str(i) + '.pkl')
+            pop_name = os.path.join(config['ev_search_dr'], config['key_dr'], config['key_name'] + str(i) + '.pkl')
 
             with open(pop_name, 'rb') as output:
                 pop = pickle.load(output)
@@ -47,7 +49,7 @@ class Analysis():
 
     def Save_Keys_To_File(self):
 
-        with open(config['output_key_loc'], 'w') as f:
+        with open(self.config['output_key_loc'], 'w') as f:
             for indv in self.key_sets:
                 
                 f.write(str(indv.score) + ': ')
@@ -68,6 +70,7 @@ class Analysis():
 
 
     def Print_Pop_Level_Info(self):
+        config = self.config
 
         print('Population Level Statistics')
 
@@ -90,16 +93,25 @@ class Analysis():
         plt.xlabel('Generation')
         plt.ylabel('Score')
         plt.title('Population Performance')
-        plt.savefig(config['output_performance_graph_loc'])
+        plt.savefig(self.config['output_performance_graph_loc'])
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser(description='Give quick analysis commands')
-
+    parser = argparse.ArgumentParser(description='Provides quick analysis tools')
+    parser.add_argument('config', type=str, help='Location/name of the pickled config file to use (can add .pkl automatically)')
     parser.add_argument('command', type=str, help='save - to save, best - to print the best score over all populations, time - to print the average evaluation time, summary - to print a summary')
     args = parser.parse_args()
 
-    a = Analysis()
+    cwd = os.getcwd()
+    CONFIG_LOC = os.path.join(cwd, args.config)
+
+    if not os.path.exists(CONFIG_LOC):
+        CONFIG_LOC += '.pkl'
+
+    with open(CONFIG_LOC, 'rb') as output:
+        config = pickle.load(output)
+
+    a = Analysis(config)
 
     if args.command == 'save':
         a.Save_Keys_To_File()
