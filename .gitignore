@@ -4,7 +4,8 @@ Ev_Search/Data/
 nohup.out
 *.pkl
 *.jpg
-
+BMI_set
+progress
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
