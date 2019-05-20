@@ -80,7 +80,7 @@ def filter_by_subject_set(df, s):
     '''Returns two dataframes, the first with subjects not in the set,
        and second those with subjects in the set'''
 
-       return df[~df.subject.isin(s)], df[df.subject.isin(s)]
+    return df[~df.subject.isin(s)], df[df.subject.isin(s)]
 
 
 def preform_split(data, loc, split_sz, random_state):
