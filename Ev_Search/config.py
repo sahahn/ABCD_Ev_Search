@@ -91,6 +91,9 @@ config['raw_data_loc'] = data_dr + 'Raw_ABCD_Struc_Data.csv'
 #Location containing a list of test subject ID's
 config['test_id_loc'] = data_dr + 'ABCD_testsetIDs.csv'
 
+#Optionally split the training set further by witholding a validation set- set size to % of train, 0 for none
+config['validation_sz'] = .15
+
 #Full path where the proccessed data is stored, passed as output_loc
 # e.g. config['proc_data_path'] + _data.cvs or + test_data.csv
 config['proc_data_path'] = data_dr + config['key_name']

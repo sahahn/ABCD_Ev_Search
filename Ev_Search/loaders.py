@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np
 from sklearn.preprocessing import StandardScaler, RobustScaler
+from sklearn.model_selection import train_test_split
 
 def load_test_ids(testID_loc):
 
@@ -28,7 +29,6 @@ def common_corrections(in_scores):
         in_scores.rename({col_names[1]: 'score'}, axis=1)
 
     return in_scores
-
 
 def filter_data(data, i_keys, d_keys):
     
@@ -78,7 +78,9 @@ def process_new_dataset(config):
 
     train_data = train_data.drop(['subject'], axis=1)
     test_data = test_data.drop(['subject'], axis=1)
-    
+
+    train_data, val_data = train_test_split(data, test_size=config['validation_sz'])
+
     scaler = None
 
     if config['scale_type'] == 'standard':
@@ -94,8 +96,12 @@ def process_new_dataset(config):
         train_data[keys] = scaler.fit_transform(train_data[keys])
         test_data[keys] = scaler.transform(test_data[keys])
 
+        if config['validation_sz'] > 0:
+            val_data[keys] = scaler.transform(val_data[keys])
+
     train_data.to_csv(config['proc_data_path'] + '_data.csv', index=False)
     test_data.to_csv(config['proc_data_path'] + '_test_data.csv', index=False)
+    val_data.to_csv(config['proc_data_path'] + '_val_data.csv', index=False)
 
 def load_key_names(data_loc):
 
