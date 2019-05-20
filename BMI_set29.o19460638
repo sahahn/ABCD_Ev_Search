@@ -1,0 +1,7 @@
+Init Population
+Traceback (most recent call last):
+  File "Search.py", line 50, in <module>
+    pop.Fill()
+  File "/gpfs1/home/s/a/sahahn/ABCD_Ev_Search/Ev_Search/Population.py", line 77, in Fill
+    self.individuals.append(Key_Set())
+TypeError: __init__() missing 1 required positional argument: 'config'
