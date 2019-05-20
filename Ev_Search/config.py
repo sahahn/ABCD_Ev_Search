@@ -75,6 +75,7 @@ config['start_key_num'] = 1
 #-------------------------------
 
 #Boolean to override existing proccessed data
+#Note: If not ever created for this unique config['key_name'], then then new data will be created regardless
 config['create_new_data'] = True
 
 #Basic setting that if set to not be None selects only columns with provided names

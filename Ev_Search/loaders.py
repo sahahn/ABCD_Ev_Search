@@ -41,6 +41,10 @@ def common_corrections(in_scores):
         print(col_names[1], 'renamed to: ', 'score')
         in_scores = in_scores.rename({col_names[1]: 'score'}, axis=1)
 
+    invalid_score_inds = in_scores[np.isnan(in_scores.score)].index
+    print('Dropping', len(invalid_score_inds), 'scores/subjects for NaN scores')
+    in_scores = in_scores.drop(index=invalid_score_inds)
+
     return in_scores
 
 def filter_data(data, i_keys, d_keys):
