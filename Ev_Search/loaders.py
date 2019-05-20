@@ -21,11 +21,13 @@ def common_corrections(in_scores):
     col_names = list(in_scores)
 
     if 'subject' not in col_names:
+        print(col_names[0], 'renamed to: ', 'subject')
         in_scores.rename({col_names[0]: 'subject'}, axis=1)
 
     in_scores = in_scores.drop_duplicates(subset = 'subject')
 
     if 'score' not in col_names:
+        print(col_names[1], 'renamed to: ', 'score')
         in_scores.rename({col_names[1]: 'score'}, axis=1)
 
     return in_scores
@@ -66,10 +68,18 @@ def filter_data(data, i_keys, d_keys):
 def process_new_dataset(config):
     '''Load and process a new dataset with various corrections and parameters'''
     
+    print('Reading ids + scores from: ', config['scores_loc'])
     scores = common_corrections(pd.read_csv(config['scores_loc']))
+    
+    print('Reading test set ids from: ', config['test_id_loc'])
     test_set = load_test_ids(config['test_id_loc'])
+    
+    print('Reading underlying dataset from: ', config['raw_data_loc'])
     data = pd.read_csv(config['raw_data_loc'])
 
+    print('Filtering dataset with -')
+    print('Inclusion Keys: ', config['i_keys'])
+    print('Drop Keys: ', config['d_keys'])
     data = filter_data(data, config['i_keys'], config['d_keys'])
 
     relevant_data = pd.merge(data,scores)
@@ -89,6 +99,7 @@ def process_new_dataset(config):
         scaler = RobustScaler(**config['robust_extra_params'])
 
     if scaler != None:
+        print('Scaling data with', config['scale_type'], 'scaling')
         
         keys = list(train_data)
         keys.remove('score')
@@ -99,9 +110,14 @@ def process_new_dataset(config):
         if config['validation_sz'] > 0:
             val_data[keys] = scaler.transform(val_data[keys])
 
+    print('Saving data to: ', config['proc_data_path'])
     train_data.to_csv(config['proc_data_path'] + '_data.csv', index=False)
     test_data.to_csv(config['proc_data_path'] + '_test_data.csv', index=False)
     val_data.to_csv(config['proc_data_path'] + '_val_data.csv', index=False)
+
+    print('Loaded training data with size: ', np.shape(train_data))
+    print('Loaded test data with size: ', np.shape(test_data))
+    print('Loaded validation data with size: ', np.shape(validation_data))
 
 def load_key_names(data_loc):
 

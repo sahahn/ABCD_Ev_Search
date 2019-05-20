@@ -71,7 +71,7 @@ config['start_key_num'] = 1
 #-------------------------------
 
 #Boolean to override existing proccessed data
-config['create_new_data'] = False
+config['create_new_data'] = True
 
 #Basic setting that if set to not be None selects only columns with provided names
 config['i_keys'] = None
@@ -142,4 +142,5 @@ config['class_weight'] = 'balanced'
 config['metric'] = 'r2'
 
 #Type of transform to compute on the target regression variable (only for regression)
-config['target_transform'] = 'log'
+#Options are: 'log' to preform a log1p transform, or None
+config['target_transform'] = None
