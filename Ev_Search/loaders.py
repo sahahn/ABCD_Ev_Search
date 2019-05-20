@@ -26,7 +26,8 @@ def save_subject_ids(data, loc):
 
 
 def common_corrections(in_scores):
-    ''' Preform some common corrections on the input scores csv '''
+    ''' Preform some common corrections on the input scores csv after loading,
+        Specifically: column renaming and checking for duplicate subjects'''
 
     col_names = list(in_scores)
 
@@ -158,7 +159,7 @@ def process_new_dataset(config):
 
     print('Loaded training data with size: ', np.shape(train_data))
     print('Loaded test data with size: ', np.shape(test_data))
-    print('Loaded validation data with size: ', np.shape(validation_data))
+    print('Loaded validation data with size: ', np.shape(val_data))
 
 def load_key_names(data_loc):
 
