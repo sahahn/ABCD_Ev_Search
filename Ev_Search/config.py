@@ -11,7 +11,7 @@ config['key_name'] = 'BMI'
 config['num_indv'] = 100
 
 #Number of generations to evaluate over, in each VACC job
-config['num_gens'] = 30
+config['num_gens'] = 300
 
 #Number of new random Key_Sets to add in each Fill
 config['new_rand'] = 3
