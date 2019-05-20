@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-import os
+import os, pickle
 
 config = {}
 
 #Job name / unique name of run (No numbers at end and **should be unique**!!)
 config['key_name'] = 'BMI'
+
+#Location to store the pickeled config file
+config['config_loc'] = config['key_name'] + '.pkl'
 
 #GENERAL EV. SEARCH CONFIGS
 #-------------------------
@@ -170,3 +173,7 @@ config['metric'] = 'r2'
 #Type of transform to compute on the target regression variable (only for regression)
 #Options are: 'log' to preform a log1p transform, or None
 config['target_transform'] = None
+
+with open(config['config_loc'], 'wb') as output:
+    pickle.dump(config, output)
+

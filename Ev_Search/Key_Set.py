@@ -6,23 +6,23 @@ Created on Fri Jan 11 11:25:41 2019
 @author: sage
 """
 
-from config import config
 from Evaluate import Run_Evaluation
 from loaders import load_key_names
 import random
 
 class Key_Set():
     
-    def __init__(self):
+    def __init__(self, config):
 
-        self.key_names = load_key_names(config['loc'])
+        self.config = config
+        self.key_names = load_key_names(self.config['loc'])
         self.n_options = len(self.key_names)
-        self.keys = random.sample(range(self.n_options), config['start_num'] + random.randint(0,2))
+        self.keys = random.sample(range(self.n_options), self.config['start_num'] + random.randint(0,2))
         self.score = None
         
     def Evaluate(self):
 
-        self.score = Run_Evaluation(self.keys)
+        self.score = Run_Evaluation(self.keys, self.config)
         
     def Compare(self, other):
 
@@ -34,18 +34,17 @@ class Key_Set():
         
         return False
         
-        
     def Mutate(self):
         
         r = random.random()
         
-        if r < config['change_chance']:
+        if r < self.config['change_chance']:
             self.change_key()
         else:
-            if len(self.keys) > config['start_num']:
+            if len(self.keys) > self.config['start_num']:
                 r = random.random()
                 
-                if r < config['change_chance']:
+                if r < self.config['change_chance']:
                     self.remove_key()
                 else:
                     self.add_key()

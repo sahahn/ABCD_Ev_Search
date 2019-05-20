@@ -7,9 +7,7 @@ Created on Fri Jan 11 11:25:00 2019
 """
 
 from Population import Population
-from config import config
-import argparse
-import pickle
+import argparse, pickle
 
 def save_population(pop, location):
     
@@ -20,7 +18,11 @@ parser = argparse.ArgumentParser(description='Give load/save commands')
 
 parser.add_argument('path', type=str, help='File Path')
 parser.add_argument('load', type=int, help='Load old or not')
+parser.add_argument('config', type=str, help='Location/name of the pickled config file to use')
 args = parser.parse_args()
+
+with open(args.config, 'rb') as output:
+    config = pickle.load(output)
 
 if args.load == 1:
     
@@ -33,10 +35,7 @@ if args.load == 1:
 elif args.load == 0:
     
     print('Init Population')
-    n_indv = config['num_indv']
-    new_rand = config['new_rand']
-    
-    pop = Population(n_indv, new_rand)
+    pop = Population(config)
     pop.Evaluate()
    
 elif args.load == 2:
@@ -46,14 +45,12 @@ elif args.load == 2:
     
     pop.Evaluate(type='Old')
 
-num_gens = config['num_gens']
-
 #Initial Generation
 pop.Tournament()
 pop.Fill()
 
 #Run rest of Generations
-for i in range(1, num_gens):
+for i in range(1, config['num_gens']):
     print('Starting Gen ', i)
     
     pop.Evaluate(type='New')

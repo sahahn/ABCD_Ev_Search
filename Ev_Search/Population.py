@@ -10,14 +10,13 @@ from Key_Set import Key_Set
 import numpy as np
 import copy, random, time
 
-
 class Population():
     
-    def __init__(self, n_indv, new_rand):
+    def __init__(self, config):
         
-        self.n_indv = n_indv
-        self.new_rand = new_rand
-        self.individuals = [Key_Set() for i in range(self.n_indv)]
+        self.n_indv = config['num_indv']
+        self.new_rand = config['new_rand']
+        self.individuals = [Key_Set(config) for i in range(self.n_indv)]
         self.best_over_time = []
         self.eval_times = []
 

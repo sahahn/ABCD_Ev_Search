@@ -6,9 +6,24 @@ Created on Fri Jan 25 13:30:35 2019
 @author: sage
 """
 
-import os, time, sys
-from Ev_Search.config import config
+import os, time, sys, argparse, pickle
 from Ev_Search.loaders import process_new_dataset
+
+#Load in the config file with args as a global variable
+parser = argparse.ArgumentParser(description='Main task manager for the ABCD Evolutionary search')
+parser.add_argument('config', type=str, help='Location/name of the pickled config file to use (can add .pkl automatically)')
+args = parser.parse_args()
+
+cwd = os.getcwd()
+CONFIG_LOC = os.path.join(cwd, args.config)
+
+if not os.path.exists(CONFIG_LOC):
+    CONFIG_LOC += '.pkl'
+
+with open(CONFIG_LOC, 'rb') as output:
+    config = pickle.load(output)
+
+print('Using config', config['key_name'])
 
 COUNTER = {}
 TIMER = {}
@@ -50,6 +65,9 @@ def change_temp_script(name, load):
             lines[i] = lines[i].replace('REPLACE', pkl_loc)
         if 'LOAD' in lines[i]:
             lines[i] = lines[i].replace('LOAD', load)
+        if 'CONFIG_LOC' in lines[i]:
+            lines[i] = lines[i].replace('CONFIG_LOC', load)
+            
             
     with open('temp.script', 'w') as f:
         for line in lines:

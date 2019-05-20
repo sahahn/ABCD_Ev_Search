@@ -5,11 +5,10 @@ Created on Wed Jan  9 11:39:34 2019
 """
 
 import pandas as pd
-from config import config
 import numpy as np
 import ML
 
-def Run_Evaluation(keys):
+def Run_Evaluation(keys, config):
 
     keys.sort()
     
