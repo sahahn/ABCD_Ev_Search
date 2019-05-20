@@ -32,13 +32,13 @@ def common_corrections(in_scores):
 
     if 'subject' not in col_names:
         print(col_names[0], 'renamed to: ', 'subject')
-        in_scores.rename({col_names[0]: 'subject'}, axis=1)
+        in_scores = in_scores.rename({col_names[0]: 'subject'}, axis=1)
 
     in_scores = in_scores.drop_duplicates(subset = 'subject')
 
     if 'score' not in col_names:
         print(col_names[1], 'renamed to: ', 'score')
-        in_scores.rename({col_names[1]: 'score'}, axis=1)
+        in_scores = in_scores.rename({col_names[1]: 'score'}, axis=1)
 
     return in_scores
 
