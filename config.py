@@ -3,11 +3,14 @@ import os, pickle
 
 config = {}
 
-#Job name / unique name of run (No numbers at end and **should be unique**!!)
-config['key_name'] = 'BMI'
+#Unique name of config file / setup **should be unique** so it doesn't conflict with other runs / file names
+config['name'] = 'BMI'
 
-#Location to store the pickeled config file
-config['config_loc'] = config['key_name'] + '.pkl'
+#Job name for each individual run/key set
+config['key_name'] = config['name'] + '_set'
+
+#Location to store the config file as pickle
+config['config_loc'] = config['name'] + '.pkl'
 
 #GENERAL EV. SEARCH CONFIGS
 #-------------------------
@@ -39,7 +42,7 @@ config['change_chance'] = .6
 config['num_search_gens'] = 10
 
 #Number of seperate populations / jobs to run at once
-config['num_jobs'] = 50
+config['num_jobs'] = 30
 
 #Three options exist for starting jobs,
 #Either you are 1. starting fresh jobs, 2. continuing an ongoing job where key_set outputs exist,
@@ -125,7 +128,7 @@ config['save_ids'] = True
 
 #Full path where the proccessed data is stored, passed as output_loc
 # e.g. config['proc_data_path'] + _data.cvs or + test_data.csv, _val_data.csv
-config['proc_data_path'] = os.path.join(data_dr, config['key_name'])
+config['proc_data_path'] = os.path.join(data_dr, config['name'])
 
 #Type of scaling to preform on data, standard or robust right now
 config['scale_type'] = 'robust'
@@ -138,10 +141,10 @@ config['robust_extra_params'] = {'with_centering': True, 'with_scaling': True, '
 #-------------------------------
 
 #Location to output all of the key sets and score in text
-config['output_key_loc'] = os.path.join(config['ev_search_dr'], config['key_name'] + '.keys')
+config['output_key_loc'] = os.path.join(config['ev_search_dr'], config['name'] + '_all_keys.txt')
 
 #Location to save a plot of performance over time
-config['output_performance_graph_loc'] = os.path.join(config['ev_search_dr'], config['key_name'] + '_gen_performance.jpg')
+config['output_performance_graph_loc'] = os.path.join(config['ev_search_dr'], config['name'] + 'performance_plot.jpg')
 
 #SETTINGS FOR EACH RANDOM SEARCH
 #-------------------------------

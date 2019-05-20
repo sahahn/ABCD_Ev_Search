@@ -23,7 +23,7 @@ if not os.path.exists(CONFIG_LOC):
 with open(CONFIG_LOC, 'rb') as output:
     config = pickle.load(output)
 
-print('Using config', config['key_name'])
+print('Using config', config['name'], 'with config file at', CONFIG_LOC)
 
 COUNTER = {}
 TIMER = {}
