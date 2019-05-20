@@ -2,7 +2,7 @@
 config = {}
 
 #Job name / unique name of run (No numbers at end and **should be unique**!!)
-config['key_name'] = 'adhd_set'
+config['key_name'] = 'BMI'
 
 #GENERAL EV. SEARCH CONFIGS
 #-------------------------
@@ -10,16 +10,20 @@ config['key_name'] = 'adhd_set'
 #Number of Key_Set individuals to have in the population
 config['num_indv'] = 100
 
-#Number of generations to evaluate over, in each job
+#Number of generations to evaluate over, in each VACC job
 config['num_gens'] = 30
 
 #Number of new random Key_Sets to add in each Fill
 config['new_rand'] = 3
 
-#Number of keys to start with on a new random Key Set
+#Number of keys to start with on a new random Key Set 
+#Plus up to 2 (hard coded param for now), so if = 3, then a new set will have either 3, 4 or 5 starting keys
 config['start_num'] = 3
 
-# Prob for a key to mutate, 1-Prob - (1-Prob*1-Prob) to add a key, (1-Prob*1-Prob) to delete a key
+# Prob. for a key to mutate (P) = config['change_chance']
+# Prob. to remove a key = ((1-P)*(1-P))
+# Prob. to add a key = (1-P) - [Prob. to remove a key / ((1-P)*(1-P))]
+# So, Prob. that either a key is added or removed = 1-P
 config['change_chance'] = .6
 
 
@@ -83,7 +87,7 @@ config['d_keys'] = ['norm-mean', '-std', 'fold-ind', 'gaus-curv', 'curv-ind']
 data_dr = config['ev_search_dr'] + '/Data/'
 
 #Location of the csv with column names subject and score
-config['scores_loc'] = data_dr + 'All_ADHD_IDs.csv'
+config['scores_loc'] = data_dr + 'bmi_ids.csv'
 
 #Location of the csv with subject and raw measurement data (no demographics as of right now)
 config['raw_data_loc'] = data_dr + 'Raw_ABCD_Struc_Data.csv'
