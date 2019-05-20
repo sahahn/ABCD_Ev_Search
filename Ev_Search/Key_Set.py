@@ -6,9 +6,9 @@ Created on Fri Jan 11 11:25:41 2019
 @author: sage
 """
 
+import random
 from Evaluate import Run_Evaluation
 from loaders import load_key_names
-import random
 
 class Key_Set():
     

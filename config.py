@@ -58,8 +58,11 @@ config['continue'] = False
 #If false then fresh jobs are created if true then jobs are loaded from saved files
 config['preloaded'] = False
 
+#Path to main directory, with task manager ect..
+config['main_dr'] = '/users/s/a/sahahn/ABCD_Ev_Search/'
+
 #Directory path on VACC to Ev_Search Folder
-config['ev_search_dr'] = '/users/s/a/sahahn/ABCD_Ev_Search/Ev_Search'
+config['ev_search_dr'] = os.path.join(config['main_dr'] + 'Ev_Search')
 
 #Directory to store keys in
 config['key_dr'] = 'Keys'
@@ -141,10 +144,10 @@ config['robust_extra_params'] = {'with_centering': True, 'with_scaling': True, '
 #-------------------------------
 
 #Location to output all of the key sets and score in text
-config['output_key_loc'] = os.path.join(config['ev_search_dr'], config['name'] + '_all_keys.txt')
+config['output_key_loc'] = os.path.join(config['main_dr'], config['name'] + '_all_keys.txt')
 
 #Location to save a plot of performance over time
-config['output_performance_graph_loc'] = os.path.join(config['ev_search_dr'], config['name'] + 'performance_plot.jpg')
+config['output_performance_graph_loc'] = os.path.join(config['main_dr'], config['name'] + '_performance_plot.jpg')
 
 #SETTINGS FOR EACH RANDOM SEARCH
 #-------------------------------
@@ -159,7 +162,7 @@ config['binary'] = False
 config['model_type'] = 'linear'
 
 #Number of times to repeat CV search
-config['n_repeats'] = 2
+config['n_repeats'] = 3
 
 #Number of CV splits to evaluate at each random split
 config['n_splits'] = 3

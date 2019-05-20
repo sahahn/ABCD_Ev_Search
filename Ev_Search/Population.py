@@ -6,9 +6,11 @@ Created on Fri Jan 11 11:38:12 2019
 @author: sage
 """
 
-from Key_Set import Key_Set
 import numpy as np
 import copy, random, time
+
+
+from Key_Set import Key_Set
 
 class Population():
     

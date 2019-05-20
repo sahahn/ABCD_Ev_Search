@@ -6,11 +6,12 @@ Created on May something 20 something
 @author: sage
 """
 
-import pickle, os, argparse
+import pickle, os, argparse, sys
+sys.path.append(os.getcwd() + '/Ev_Search/')
+
 import numpy as np
 import matplotlib.pyplot as plt
-from Ev_Search.Population import Population
-from Ev_Search.Key_Set import Key_Set
+from Population import Population
 
 class Analysis():
 
@@ -29,7 +30,7 @@ class Analysis():
 
         for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
             pop_name = os.path.join(config['ev_search_dr'], config['key_dr'], config['key_name'] + str(i) + '.pkl')
-
+ 
             with open(pop_name, 'rb') as output:
                 pop = pickle.load(output)
                 self.pops.append(pop)
@@ -124,7 +125,7 @@ if __name__ == "__main__":
         a.Print_Best()
 
     elif args.command == 'time':
-        a.Print_Average_Eval_Time()
+        a.Print_Mean_Eval_Time()
 
     elif args.command == 'key_size':
         a.Print_Mean_Key_Size()
@@ -139,7 +140,7 @@ if __name__ == "__main__":
         a.Plot_Best_By_Generation()
     
     elif args.command == 'summary':
-        a.Print_Average_Eval_Time()
+        a.Print_Mean_Eval_Time()
         a.Print_Best()
         a.Print_Mean_Key_Size()
         a.Print_Mean_Score_Std()
