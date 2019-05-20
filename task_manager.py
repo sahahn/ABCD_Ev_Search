@@ -46,7 +46,8 @@ def change_temp_script(name, load):
         if 'EV_SEARCH_LOCATION' in lines[i]:
             lines[i] = lines[i].replace('EV_SEARCH_LOCATION', config['ev_search_dr'])
         if 'REPLACE' in lines[i]:
-            lines[i] = lines[i].replace('REPLACE', config['key_name'] + name)
+            pkl_loc = os.path.join(config['key_dr'], config['key_name'] + name)
+            lines[i] = lines[i].replace('REPLACE', pkl_loc)
         if 'LOAD' in lines[i]:
             lines[i] = lines[i].replace('LOAD', load)
             
@@ -130,6 +131,9 @@ def check_progress():
             if current_time - TIMER[i] > config['restart_lim'] * 3600:
                 restart_job(i)
 
+#Ensure key directory exists
+key_dr = os.path.join(config['ev_search_dr'], config['key_dr'])
+os.makedirs(key_dr, exist_ok=True)
 
 #If the data file does not exist or if an override is specified, create data file
 if not os.path.isfile(config['loc']) or config['create_new_data']:

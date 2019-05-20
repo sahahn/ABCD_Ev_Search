@@ -26,7 +26,7 @@ class Analysis():
     def load_all_populations(self):
 
         for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
-            pop_name = config['key_name'] + str(i) + '.pkl'
+            pop_name = os.path.join(config['key_dr'], config['key_name'] + str(i) + '.pkl')
 
             with open(pop_name, 'rb') as output:
                 pop = pickle.load(output)

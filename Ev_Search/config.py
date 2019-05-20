@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+
 config = {}
 
 #Job name / unique name of run (No numbers at end and **should be unique**!!)
@@ -53,6 +55,9 @@ config['preloaded'] = False
 #Directory path on VACC to Ev_Search Folder
 config['ev_search_dr'] = '/users/s/a/sahahn/ABCD_Ev_Search/Ev_Search'
 
+#Directory to store keys in
+config['key_dr'] = 'Keys'
+
 #How often to check for new jobs
 config['check_every'] = 120
 
@@ -85,18 +90,18 @@ config['i_keys'] = None
 config['d_keys'] = ['norm-mean', '-std', 'fold-ind', 'gaus-curv', 'curv-ind']
 
 #Location of the directory where data files are stored
-data_dr = config['ev_search_dr'] + '/Data/'
+data_dr = os.path.join(config['ev_search_dr'], 'Data')
 
 #Location of the csv with column names subject and score
-config['scores_loc'] = data_dr + 'bmi_ids.csv'
+config['scores_loc'] =  os.path.join(data_dr, 'bmi_ids.csv')
 
 #Location of the csv with subject and raw measurement data (no demographics as of right now)
-config['raw_data_loc'] = data_dr + 'Raw_ABCD_Struc_Data.csv'
+config['raw_data_loc'] = os.path.join(data_dr, 'Raw_ABCD_Struc_Data.csv')
 
 #Test and val ids should simply be a test or csv file with no headers and one subject per line!
 #Location containing a list of test subject ID's
 #Set to None if creating one from provided data
-config['test_id_loc'] = data_dr + 'ABCD_testsetIDs.csv'
+config['test_id_loc'] = os.path.join(data_dr, 'ABCD_testsetIDs.csv')
 
 #Optionally provide a location contained a saved list of validation set subject ID's
 #Set to None if creating on from test set
@@ -116,8 +121,8 @@ config['random_split_state'] = 40
 config['save_ids'] = True
 
 #Full path where the proccessed data is stored, passed as output_loc
-# e.g. config['proc_data_path'] + _data.cvs or + test_data.csv
-config['proc_data_path'] = data_dr + config['key_name']
+# e.g. config['proc_data_path'] + _data.cvs or + test_data.csv, _val_data.csv
+config['proc_data_path'] = os.path.join(data_dr, config['key_name'])
 
 #Type of scaling to preform on data, standard or robust right now
 config['scale_type'] = 'robust'
@@ -130,10 +135,10 @@ config['robust_extra_params'] = {'with_centering': True, 'with_scaling': True, '
 #-------------------------------
 
 #Location to output all of the key sets and score in text
-config['output_key_loc'] = config['ev_search_dr'] + '/' + config['key_name'] + '.keys'
+config['output_key_loc'] = os.path.join(config['ev_search_dr'], config['key_name'] + '.keys')
 
 #Location to save a plot of performance over time
-config['output_performance_graph_loc'] = config['ev_search_dr'] + '/' + config['key_name'] + '_gen_performance.jpg'
+config['output_performance_graph_loc'] = os.path.join(config['ev_search_dr'], config['key_name'] + '_gen_performance.jpg')
 
 #SETTINGS FOR EACH RANDOM SEARCH
 #-------------------------------
