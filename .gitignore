@@ -6,6 +6,8 @@ nohup.out
 *.jpg
 BMI_set
 progress
+KILL_TASKS
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
