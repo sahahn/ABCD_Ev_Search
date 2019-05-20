@@ -34,12 +34,6 @@ class Analysis():
                 pop = pickle.load(output)
                 self.pops.append(pop)
 
-    def get_best_score(self):
-        return max([pop.Get_Best_Score() for pop in self.pops])
-
-    def get_average_eval_time(self):
-        return np.mean([pop.Get_Mean_Eval_Time() for pop in self.pops])
-
     def load_all_key_sets(self):
 
         for pop in self.pops:
@@ -58,16 +52,26 @@ class Analysis():
                     f.write(feat + ',')
                 f.write('\n')
 
+    
+    def Print_Mean_Eval_Time(self):
+
+        mean = np.mean([pop.Get_Mean_Eval_Time() for pop in self.pops])
+        print('Mean Eval Time: ', str(mean))
+
     def Print_Best(self):
 
-        best = self.get_best_score()
-        print('Best score: ', str(best))
+        best = np.max([pop.Get_Best_Score() for pop in self.pops])
+        print('Best Score: ', str(best))
 
-    def Print_Average_Eval_Time(self):
+    def Print_Mean_Key_Size(self):
 
-        avg = self.get_average_eval_time()
-        print('Average eval time: ', str(avg))
+        mean = np.mean([pop.Get_Mean_Key_Size() for pop in self.pops])
+        print('Mean Key Size: ', str(mean))
 
+    def Print_Mean_Score_Std(self):
+        
+        mean = np.mean([pop.Get_Mean_Score_Std() for pop in self.pops])
+        print('Mean Score Std: ', str(mean))
 
     def Print_Pop_Level_Info(self):
         config = self.config
@@ -80,8 +84,8 @@ class Analysis():
             pop = self.pops[cnt]
             cnt += 1
             
-            n_gens, score, size = pop.Get_Num_Gens(), pop.Get_Best_Score(), pop.Get_Mean_Key_Size()
-            print('Pop -', i, 'Num Gens: ', n_gens, 'Score:', score, 'Mean Size:', size)
+            n_gens, score, size, score_std = pop.Get_Num_Gens(), pop.Get_Best_Score(), pop.Get_Mean_Key_Size(), pop.Get_Mean_Score_Std()
+            print('Pop -', i, 'Num Gens: ', n_gens, 'Score:', score, 'Mean Size:', size, 'Mean Score Std: ', score_std)
 
     def Plot_Best_By_Generation(self):
 
@@ -122,6 +126,12 @@ if __name__ == "__main__":
     elif args.command == 'time':
         a.Print_Average_Eval_Time()
 
+    elif args.command == 'key_size':
+        a.Print_Mean_Key_Size()
+
+    elif args.command == 'score_std':
+        a.Print_Mean_Score_Std()
+
     elif args.command == 'pop_info':
         a.Print_Pop_Level_Info()
 
@@ -129,8 +139,10 @@ if __name__ == "__main__":
         a.Plot_Best_By_Generation()
     
     elif args.command == 'summary':
-        a.Print_Best()
         a.Print_Average_Eval_Time()
+        a.Print_Best()
+        a.Print_Mean_Key_Size()
+        a.Print_Mean_Score_Std()
         a.Print_Pop_Level_Info()
         a.Plot_Best_By_Generation()
 

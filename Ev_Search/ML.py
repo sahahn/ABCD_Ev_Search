@@ -68,7 +68,7 @@ def evaluate_regression_model(X, y, model_type='elastic', n_splits=3, n_repeats=
         score = get_regression_score(model, X_test, y_test, metric_func, target_transform)
         scores.append(score)
 
-    return np.mean(scores)
+    return np.mean(scores), np.std(scores)
 
 def evaluate_binary_model(X, y, n_splits=3, n_repeats=2, int_cv=3, class_weight='balanced'):
 
@@ -84,7 +84,7 @@ def evaluate_binary_model(X, y, n_splits=3, n_repeats=2, int_cv=3, class_weight=
         score = get_binary_score(model, X_test, y_test)
         scores.append(score)
 
-    return np.mean(scores)
+    return np.mean(scores), np.std(scores)
 
 
 

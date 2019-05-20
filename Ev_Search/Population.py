@@ -23,6 +23,9 @@ class Population():
     def Get_Best_Score(self):
         return max([indv.score for indv in self.individuals if indv.score != None])
 
+    def Get_Mean_Score_Std(self):
+        return np.mean([indv.score_std for indv in self.individuals if indv.score_std != None])
+
     def Get_Mean_Key_Size(self):
         return np.mean([len(indv.keys) for indv in self.individuals if indv.score != None])
 

@@ -19,10 +19,11 @@ class Key_Set():
         self.n_options = len(self.key_names)
         self.keys = random.sample(range(self.n_options), self.config['start_num'] + random.randint(0,2))
         self.score = None
+        self.score_std = None
         
     def Evaluate(self):
 
-        self.score = Run_Evaluation(self.keys, self.config)
+        self.score, self.score_std = Run_Evaluation(self.keys, self.config)
         
     def Compare(self, other):
 

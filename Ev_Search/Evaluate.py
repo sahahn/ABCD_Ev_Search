@@ -17,7 +17,7 @@ def Run_Evaluation(keys, config):
     y = np.array(data['score'])
 
     if config['binary']:
-        score = ML.evaluate_binary_model(
+        score, score_std = ML.evaluate_binary_model(
                                     X, y,
                                     n_splits=config['n_splits'],
                                     n_repeats=config['n_repeats'],
@@ -26,7 +26,7 @@ def Run_Evaluation(keys, config):
                                     )
 
     else:
-        score = ML.evaluate_regression_model(
+        score, score_std = ML.evaluate_regression_model(
                                     X, y,
                                     n_splits=config['n_splits'],
                                     n_repeats=config['n_repeats'],
@@ -36,7 +36,7 @@ def Run_Evaluation(keys, config):
                                     target_transform=config['target_transform']
                                     )
 
-    return score
+    return score, score_std
 
 
 
