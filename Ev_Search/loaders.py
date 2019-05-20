@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler, RobustScaler
 from sklearn.model_selection import train_test_split
 
-def load_test_ids(testID_loc):
+def load_subject_ids(testID_loc):
 
     with open(testID_loc, 'r') as f:
         lines = f.readlines()
@@ -14,6 +14,16 @@ def load_test_ids(testID_loc):
         test_set.add(line.rstrip())
 
     return test_set
+
+
+def save_subject_ids(data, loc):
+
+    subjects = list(data.subject)
+
+    with open(loc, 'w') as f:
+        for s in subjects:
+            f.write(s + '\n')
+
 
 def common_corrections(in_scores):
     ''' Preform some common corrections on the input scores csv '''
@@ -65,14 +75,35 @@ def filter_data(data, i_keys, d_keys):
             
     return data
 
+
+def filter_by_subject_set(df, s):
+    '''Returns two dataframes, the first with subjects not in the set,
+       and second those with subjects in the set'''
+
+       return df[~df.subject.isin(s)], df[df.subject.isin(s)]
+
+
+def preform_split(data, loc, split_sz, random_state):
+    '''Preforms either a train/test split or train/val split based on either a saved file with ids
+       or computing a new split.'''
+
+    if loc != None:
+        print('Reading ids from saved loc: ', loc)
+
+        test_set = load_subject_ids(loc)
+        train_data, test_data = filter_by_subject_set(data, test_set)
+
+    else:
+        print('Creating set of size: ', split_sz)
+        train_data, test_data = train_test_split(data, test_size=split_sz, random_state=random_state)
+
+    return train_data, test_data
+
 def process_new_dataset(config):
     '''Load and process a new dataset with various corrections and parameters'''
     
     print('Reading ids + scores from: ', config['scores_loc'])
     scores = common_corrections(pd.read_csv(config['scores_loc']))
-    
-    print('Reading test set ids from: ', config['test_id_loc'])
-    test_set = load_test_ids(config['test_id_loc'])
     
     print('Reading underlying dataset from: ', config['raw_data_loc'])
     data = pd.read_csv(config['raw_data_loc'])
@@ -83,16 +114,25 @@ def process_new_dataset(config):
     data = filter_data(data, config['i_keys'], config['d_keys'])
 
     relevant_data = pd.merge(data,scores)
-    train_data = relevant_data[~relevant_data.subject.isin(test_set)]
-    test_data = relevant_data[relevant_data.subject.isin(test_set)]
+
+    print('--Splitting Test Set--')
+    train_data, test_data = preform_split(relevant_data, config['test_id_loc'], config['test_sz'], config['random_split_state'])
+
+    print('--Splitting Validation Set--')
+    train_data, val_data = preform_split(train_data, config['val_id_loc'], config['val_sz'], config['random_split_state'])
+
+    if config['save_ids']:
+
+        save_subject_ids(train_data, config['proc_data_path'] + '_train_ids.txt')
+        save_subject_ids(test_data, config['proc_data_path'] + '_test_ids.txt')
+        save_subject_ids(val_data, config['proc_data_path'] + '_val_ids.txt')
 
     train_data = train_data.drop(['subject'], axis=1)
     test_data = test_data.drop(['subject'], axis=1)
-
-    train_data, val_data = train_test_split(data, test_size=config['validation_sz'])
+    val_data = val_data.drop(['subject'], axis=1)
 
     scaler = None
-
+    
     if config['scale_type'] == 'standard':
         scaler = StandardScaler()
     elif config['scale_type'] == 'robust':
@@ -105,9 +145,10 @@ def process_new_dataset(config):
         keys.remove('score')
 
         train_data[keys] = scaler.fit_transform(train_data[keys])
-        test_data[keys] = scaler.transform(test_data[keys])
 
-        if config['validation_sz'] > 0:
+        if len(test_data) > 0:
+            test_data[keys] = scaler.transform(test_data[keys])
+        if len(val_data) > 0:
             val_data[keys] = scaler.transform(val_data[keys])
 
     print('Saving data to: ', config['proc_data_path'])

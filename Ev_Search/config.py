@@ -88,11 +88,27 @@ config['scores_loc'] = data_dr + 'All_ADHD_IDs.csv'
 #Location of the csv with subject and raw measurement data (no demographics as of right now)
 config['raw_data_loc'] = data_dr + 'Raw_ABCD_Struc_Data.csv'
 
+#Test and val ids should simply be a test or csv file with no headers and one subject per line!
 #Location containing a list of test subject ID's
+#Set to None if creating one from provided data
 config['test_id_loc'] = data_dr + 'ABCD_testsetIDs.csv'
 
+#Optionally provide a location contained a saved list of validation set subject ID's
+#Set to None if creating on from test set
+config['val_id_loc'] = None
+
+#Note, will check first for saved test / val ids, but if None will check to create
+#Optionally split the data by witholding a test set- set size to % of all, 0 for none, see above ^
+config['test_sz'] = 0
+
 #Optionally split the training set further by witholding a validation set- set size to % of train, 0 for none
-config['validation_sz'] = .15
+config['val_sz'] = .15
+
+#Provide a specific random seed when splitting by train test
+config['random_split_state'] = 40
+
+#Optionally save the train, val and test ids to a file (for easy use elsewhere)
+config['save_ids'] = True
 
 #Full path where the proccessed data is stored, passed as output_loc
 # e.g. config['proc_data_path'] + _data.cvs or + test_data.csv
