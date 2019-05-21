@@ -32,8 +32,13 @@ def check_directory():
     
     files = os.listdir()
 
-    if config['kill_command'] in files:
+    if config['kill_tasks_command'] in files:
         os.remove(config['kill_command'])
+        sys.exit()
+
+    if config['kill_jobs_command'] in files:
+        os.remove(config['kill_jobs_command'])
+        os.remove(config['loc'])
         sys.exit()
 
     files = [file for file in files if config['key_name'] in file]
@@ -69,12 +74,12 @@ def change_temp_script(name, load):
             lines[i] = lines[i].replace('CONFIG_LOC', CONFIG_LOC)
             
             
-    with open('temp.script', 'w') as f:
+    with open(config['temp_name'], 'w') as f:
         for line in lines:
             f.write(line)
             
 def run_job():
-    os.system('qsub temp.script')
+    os.system('qsub ' + config['temp_name'])
 
 def init_jobs(arg):
     
@@ -110,7 +115,7 @@ def proc_new_files(files):
             os.remove(file)
         
 def save_progress():
-    with open('progress', 'w') as f:
+    with open(config['progress_name'], 'w') as f:
         for c in COUNTER:
             f.write(str(c) + ' ' + str(COUNTER[c]) + '\n')
             

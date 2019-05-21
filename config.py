@@ -68,7 +68,7 @@ config['ev_search_dr'] = os.path.join(config['main_dr'] + 'Ev_Search')
 config['key_dr'] = 'Keys'
 
 #How often to check for new jobs
-config['check_every'] = 120
+config['check_every'] = 600
 
 #Maximum run time for each job in hours (int)
 config['max_run_time'] = 20
@@ -79,8 +79,17 @@ config['restart_lim'] = config['max_run_time'] + 1
 #Name of the template file
 config['template_name'] = 'template.script'
 
+#Name of the temp file
+config['temp_name'] = config['key_name'] + '.script'
+
+#Name of the file with progress
+config['progress_name'] = config['key_name'] + '_progress' 
+
 #If a file with this name is placed in the job directory then the task manager will terminate
-config['kill_command'] = 'KILL_TASKS'
+config['kill_tasks_command'] = 'KILL_TASKS'
+
+#If a file with this name is place in the job directory then the main data file will be deleted ending all jobs
+config['kill_jobs_command'] = 'KILL_JOBS'
 
 #Starting number to append to each job (only change from 1 if adding more populations on after queued)
 config['start_key_num'] = 1
