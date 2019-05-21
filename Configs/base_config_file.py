@@ -4,7 +4,7 @@ import os, pickle
 config = {}
 
 #Unique name of config file / setup **should be unique** so it doesn't conflict with other runs / file names
-config['name'] = 'BMI'
+config['name'] = 'ADHD'
 
 #Job name for each individual run/key set
 config['key_name'] = config['name'] + '_set'
@@ -111,7 +111,7 @@ config['d_keys'] = ['norm-mean', '-std', 'fold-ind', 'gaus-curv', 'curv-ind']
 data_dr = os.path.join(config['ev_search_dr'], 'Data')
 
 #Location of the csv with column names subject and score
-config['scores_loc'] =  os.path.join(data_dr, 'bmi_ids.csv')
+config['scores_loc'] =  os.path.join(data_dr, 'All_ADHD_IDs.csv')
 
 #Location of the csv with subject and raw measurement data (no demographics as of right now)
 config['raw_data_loc'] = os.path.join(data_dr, 'Raw_ABCD_Struc_Data.csv')
