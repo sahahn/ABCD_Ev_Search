@@ -11,11 +11,11 @@ from Ev_Search.loaders import process_new_dataset
 
 #Load in the config file with args as a global variable
 parser = argparse.ArgumentParser(description='Main task manager for the ABCD Evolutionary search')
-parser.add_argument('config', type=str, help='Location/name of the pickled config file to use (can add .pkl automatically)')
+parser.add_argument('config', type=str, help='Location/name of the pickled config file to use (can add .pkl automatically) + assumes to be in Configs folder')
 args = parser.parse_args()
 
 cwd = os.getcwd()
-CONFIG_LOC = os.path.join(cwd, args.config)
+CONFIG_LOC = os.path.join(cwd, 'Configs', args.config)
 
 if not os.path.exists(CONFIG_LOC):
     CONFIG_LOC += '.pkl'

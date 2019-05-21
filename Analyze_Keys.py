@@ -103,18 +103,20 @@ class Analysis():
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Provides quick analysis tools')
-    parser.add_argument('config', type=str, help='Location/name of the pickled config file to use (can add .pkl automatically)')
+    parser.add_argument('config', type=str, help='Location/name of the pickled config file to use (can add .pkl automatically) + assumes to be in Configs folder')
     parser.add_argument('command', type=str, help='save - to save, best - to print the best score over all populations, time - to print the average evaluation time, summary - to print a summary')
     args = parser.parse_args()
 
     cwd = os.getcwd()
-    CONFIG_LOC = os.path.join(cwd, args.config)
+    CONFIG_LOC = os.path.join(cwd, 'Configs', args.config)
 
     if not os.path.exists(CONFIG_LOC):
         CONFIG_LOC += '.pkl'
 
     with open(CONFIG_LOC, 'rb') as output:
         config = pickle.load(output)
+
+    os.makedirs(config['stats_loc'], exist_ok=True)
 
     a = Analysis(config)
 

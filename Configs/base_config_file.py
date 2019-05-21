@@ -9,7 +9,7 @@ config['name'] = 'BMI'
 #Job name for each individual run/key set
 config['key_name'] = config['name'] + '_set'
 
-#Location to store the config file as pickle
+#Location/name to store the pickle config file
 config['config_loc'] = config['name'] + '.pkl'
 
 #GENERAL EV. SEARCH CONFIGS
@@ -152,11 +152,15 @@ config['robust_extra_params'] = {'with_centering': True, 'with_scaling': True, '
 #ANALYSIS PARAMS
 #-------------------------------
 
+#Location/name of the folder to store analysis output
+config['stats_loc'] = os.path.join(config['main_dr'], 'Stats')
+
 #Location to output all of the key sets and score in text
-config['output_key_loc'] = os.path.join(config['main_dr'], config['name'] + '_all_keys.txt')
+config['output_key_loc'] = os.path.join(config['stats_loc'], config['name'] + '_all_keys.txt')
 
 #Location to save a plot of performance over time
-config['output_performance_graph_loc'] = os.path.join(config['main_dr'], config['name'] + '_performance_plot.jpg')
+config['output_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_performance_plot.jpg')
+
 
 #SETTINGS FOR EACH RANDOM SEARCH
 #-------------------------------
