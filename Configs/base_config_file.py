@@ -12,6 +12,9 @@ config['key_name'] = config['name'] + '_set'
 #Location/name to store the pickle config file
 config['config_loc'] = config['name'] + '.pkl'
 
+#Jobs are either run and submitted independently or if == False, then submit as batched jobs
+config['single_jobs'] = True
+
 #GENERAL EV. SEARCH CONFIGS
 #-------------------------
 
@@ -35,27 +38,23 @@ config['start_num'] = 3
 config['change_chance'] = .6
 
 
-#SETTINGS SPECIFIC TO THE TASK MANAGER
-#-------------------------------
+# SETTINGS SPECIFIC TO THE TASK MANAGER
+# -------------------------------
 
-#Number of overarching generations to run each search for
+# Number of overarching generations to run each search for
 config['num_search_gens'] = 10
 
-#Number of seperate populations / jobs to run at once
+# Number of seperate populations / jobs to run at once
 config['num_jobs'] = 30
 
-#Three options exist for starting jobs,
-#Either you are 1. starting fresh jobs, 2. continuing an ongoing job where key_set outputs exist,
-#3. Want to load existing jobs where key sets do not exist. 
-#In the first case set continue to false and preloaded also to false
-#In the second, set continue to true and preloaded to true
-#In the third, set continue to false and preloaded to true
+# Two options exist for starting jobs,
+# Either you are,
+# 1. starting fresh jobs with new populations 
+# 2. Want to load from existing saved populations
+# In the first case set preloaded = False
+# In the second, set preloaded = True
 
-#If continue is set to true, then no new jobs will be initiated, if set to false then all jobs will start
-#If continue is true then preloaded will not be checked
-config['continue'] = False
-
-#If false then fresh jobs are created if true then jobs are loaded from saved files
+# If false then fresh jobs are created if true then jobs are loaded from saved files
 config['preloaded'] = False
 
 #Path to main directory, with task manager ect..
@@ -77,10 +76,23 @@ config['max_run_time'] = 20
 config['restart_lim'] = config['max_run_time'] + 1
 
 #Name of the template file
-config['template_name'] = 'template.script'
+config['template_name'] = 'Templates/template.script'
 
 #Name of the temp file
 config['temp_name'] = config['key_name'] + '.script'
+
+#If using batched jobs:
+#Name of the master template file
+config['master_template'] = 'Templates/master_template.script'
+
+#Name of the temp master file
+config['master_name'] = config['key_name'] + '_master.script'
+
+#Name of the subjob template file
+config['subjob_template'] = 'Templates/subjob_template.sh'
+
+#Name of the temp subjob file
+config['subjob_name'] = config['key_name'] + '_subjob.sh'
 
 #Name of the file with progress
 config['progress_name'] = config['key_name'] + '_progress' 

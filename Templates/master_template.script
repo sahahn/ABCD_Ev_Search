@@ -1,0 +1,7 @@
+#PBS -l nodes=NUM_JOBS
+#PBS -l walltime=MAX_RUN_TIME:00:00
+#PBS -j oe
+#PBS -N NAME
+
+cd $PBS_O_WORKDIR
+pbsdsh `pwd`/SUBJOB_NAME
