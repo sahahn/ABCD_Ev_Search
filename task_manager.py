@@ -36,7 +36,7 @@ def check_directory():
         os.remove(config['kill_command'])
         sys.exit()
 
-    if config['kill_jobs_command'] in files:
+    if config['kill_jobs_command'] in files or config['kill_all_command'] in files:
         os.remove(config['kill_jobs_command'])
         os.remove(config['loc'])
         sys.exit()

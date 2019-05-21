@@ -98,10 +98,13 @@ config['subjob_name'] = config['key_name'] + '_subjob.sh'
 config['progress_name'] = config['key_name'] + '_progress' 
 
 #If a file with this name is placed in the job directory then the task manager will terminate
-config['kill_tasks_command'] = 'KILL_TASKS'
+config['kill_tasks_command'] =  'KILL_' + config['name'] + '_TASKS'
 
 #If a file with this name is place in the job directory then the main data file will be deleted ending all jobs
-config['kill_jobs_command'] = 'KILL_JOBS'
+config['kill_jobs_command'] = 'KILL_' + config['name'] + '_JOBS'
+
+#If a file with this name is placed in the directory, all active task managers will run Kill Jobs
+config['kill_all_command'] = 'KILL_ALL'
 
 #Starting number to append to each job (only change from 1 if adding more populations on after queued)
 config['start_key_num'] = 1
