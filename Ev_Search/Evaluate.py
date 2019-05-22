@@ -8,13 +8,10 @@ import pandas as pd
 import numpy as np
 import ML
 
-def Run_Evaluation(keys, config):
+def Run_Evaluation(keys, config, data):
 
     keys.sort()
-    
-    data = pd.read_csv(config['loc'])
-    X = np.array(data.drop(['score'], axis=1))[:,keys]
-    y = np.array(data['score'])
+    X,y = data
 
     if config['binary']:
         score, score_std = ML.evaluate_binary_model(

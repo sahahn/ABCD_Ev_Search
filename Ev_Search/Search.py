@@ -24,26 +24,32 @@ args = parser.parse_args()
 with open(args.config, 'rb') as output:
     config = pickle.load(output)
 
+ data = pd.read_csv(config['loc'])
+ X = np.array(data.drop(['score'], axis=1))[:,keys]
+ y = np.array(data['score'])
+
+ data = (X,y)
+
 if args.load == 1:
     
     print('Load Pop from', args.path)
     with open(args.path, 'rb') as output:
         pop = pickle.load(output)
     
-    pop.Evaluate(type='New')
+    pop.Evaluate(data, type='New')
     
 elif args.load == 0:
     
     print('Init Population')
     pop = Population(config)
-    pop.Evaluate()
+    pop.Evaluate(data)
    
 elif args.load == 2:
     print('Load Pop from', args.path)
     with open(args.path, 'rb') as output:
         pop = pickle.load(output)
     
-    pop.Evaluate(type='Old')
+    pop.Evaluate(data, type='Old')
 
 #Initial Generation
 pop.Tournament()
@@ -53,7 +59,7 @@ pop.Fill()
 for i in range(1, config['num_gens']):
     print('Starting Gen ', i)
     
-    pop.Evaluate(type='New')
+    pop.Evaluate(data, type='New')
     pop.Tournament()
     
     print('Current best: ', pop.Get_Best_Score())

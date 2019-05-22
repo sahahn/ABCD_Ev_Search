@@ -21,9 +21,9 @@ class Key_Set():
         self.score = None
         self.score_std = None
         
-    def Evaluate(self):
+    def Evaluate(self, data):
 
-        self.score, self.score_std = Run_Evaluation(self.keys, self.config)
+        self.score, self.score_std = Run_Evaluation(self.keys, self.config, data)
         
     def Compare(self, other):
 

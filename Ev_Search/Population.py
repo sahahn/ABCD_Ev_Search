@@ -40,12 +40,12 @@ class Population():
     def add_best(self):
         self.best_over_time.append(self.Get_Best_Score())        
 
-    def Evaluate(self, type='None'):
+    def Evaluate(self, data, type='None'):
         
         if type == 'None':
 
             for indv in self.individuals:
-                indv.Evaluate()
+                indv.Evaluate(data)
        
         elif type == 'New':
 
@@ -53,7 +53,7 @@ class Population():
             
             for indv in self.individuals:
                 if indv.score == None:
-                    indv.Evaluate()
+                    indv.Evaluate(data)
 
             self.eval_times.append(time.time() - start_time)
       
@@ -61,7 +61,7 @@ class Population():
            
             for indv in self.individuals:
                 if indv.score != None:
-                    indv.Evaluate()
+                    indv.Evaluate(data)
    
         self.add_best()
 
