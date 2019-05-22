@@ -147,13 +147,22 @@ def init_jobs(arg):
 
 def check_counter():
     '''Returns true if jobs need to be run more'''
+
+    if config['single_jobs']:
     
-    #Check if any jobs are not done
-    for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
-        if COUNTER[str(i)] < config['num_search_gens']:
+        #Check if any jobs are not done
+        for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
+            if COUNTER[str(i)] < config['num_search_gens']:
+                return True
+        return False
+
+    else:
+
+        if COUNTER['1'] < config['num_search_gens']:
             return True
-        
-    return False
+        return False
+
+
 
 def proc_new_files(files):
 
