@@ -1,4 +1,4 @@
-#PBS -l nodes=NUM_JOBS:ppn=1,pmem=1gb,pvmem=2gb
+#PBS -l nodes=NUM_JOBS,pmem=1gb,pvmem=2gb
 #PBS -l walltime=MAX_RUN_TIME:00:00
 #PBS -j oe
 #PBS -N JOBNAME
