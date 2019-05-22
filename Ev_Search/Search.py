@@ -24,11 +24,11 @@ args = parser.parse_args()
 with open(args.config, 'rb') as output:
     config = pickle.load(output)
 
- data = pd.read_csv(config['loc'])
- X = np.array(data.drop(['score'], axis=1))[:,keys]
- y = np.array(data['score'])
-
- data = (X,y)
+#Read in data only once at start
+data = pd.read_csv(config['loc'])
+X = np.array(data.drop(['score'], axis=1))[:,keys]
+y = np.array(data['score'])
+data = (X,y)
 
 if args.load == 1:
     
