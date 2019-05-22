@@ -85,7 +85,7 @@ def change_temp_script(name, load):
     
     pkl_loc = os.path.join(config['key_dr'], config['key_name'] + name)
 
-    replacements = {'MAX_RUN_TIME': str(config['max_run_time'],
+    replacements = {'MAX_RUN_TIME': str(config['max_run_time']),
                     'EV_SEARCH_LOCATION': config['ev_search_dr'],
                     'REPLACE': pkl_loc,
                     'NAME': config['key_name'] + name,
@@ -98,7 +98,7 @@ def change_temp_script(name, load):
 
 def change_temp_scripts(load):
 
-    replacements = {'MAX_RUN_TIME': str(config['max_run_time'],
+    replacements = {'MAX_RUN_TIME': str(config['max_run_time']),
                     'EV_SEARCH_LOCATION': config['ev_search_dr'],
                     'NAME': config['key_name'] + '_Output',
                     'SUBJOB_NAME': config['subjob_name'],
