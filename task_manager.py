@@ -106,7 +106,7 @@ def change_temp_scripts(load):
                     'JOBNAME': config['key_name'] + '_Output',
                     'SUBJOB_NAME': config['subjob_name'],
                     'NUM_JOBS': config['num_jobs'],
-                    'START_NUM': config['start_num'],
+                    'START_NUM': config['start_key_num'],
                     'LOAD': load,
                     'CONFIG_LOC': CONFIG_LOC}
 
