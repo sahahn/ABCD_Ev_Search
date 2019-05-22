@@ -9,7 +9,7 @@ import ML
 def Run_Evaluation(keys, config, data):
 
     keys.sort()
-    X,y = data
+    X,y = data[0][:,keys], data[1]
 
     if config['binary']:
         score, score_std = ML.evaluate_binary_model(

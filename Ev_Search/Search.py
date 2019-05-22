@@ -9,7 +9,6 @@ Created on Fri Jan 11 11:25:00 2019
 from Population import Population
 import argparse, pickle
 import pandas as pd
-import numpy as np
 
 def save_population(pop, location):
     
@@ -28,7 +27,7 @@ with open(args.config, 'rb') as output:
 
 #Read in data only once at start
 data = pd.read_csv(config['loc'])
-X = np.array(data.drop(['score'], axis=1))[:,keys]
+X = np.array(data.drop(['score'], axis=1))
 y = np.array(data['score'])
 data = (X,y)
 
