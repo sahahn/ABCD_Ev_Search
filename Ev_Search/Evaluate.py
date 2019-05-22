@@ -4,8 +4,6 @@ Created on Wed Jan  9 11:39:34 2019
 @author: sage
 """
 
-import pandas as pd
-import numpy as np
 import ML
 
 def Run_Evaluation(keys, config, data):
