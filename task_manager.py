@@ -77,7 +77,7 @@ def change_lines(lines, replacements):
     for i in range(len(lines)):
         for r in replacements:
             if r in lines[i]:
-                lines[i].replace(r, str(replacements[r]))
+                lines[i] = lines[i].replace(r, str(replacements[r]))
     
     return lines
 
