@@ -88,7 +88,7 @@ def change_temp_script(name, load):
     replacements = {'MAX_RUN_TIME': config['max_run_time'],
                     'EV_SEARCH_LOCATION': config['ev_search_dr'],
                     'REPLACE': pkl_loc,
-                    'NAME': config['key_name'] + name,
+                    'JOBNAME': config['key_name'] + name,
                     'LOAD': load,
                     'CONFIG_LOC': CONFIG_LOC}
 
@@ -100,7 +100,7 @@ def change_temp_scripts(load):
 
     replacements = {'MAX_RUN_TIME': config['max_run_time'],
                     'EV_SEARCH_LOCATION': config['ev_search_dr'],
-                    'NAME': config['key_name'] + '_Output',
+                    'JOBNAME': config['key_name'] + '_Output',
                     'SUBJOB_NAME': config['subjob_name'],
                     'NUM_JOBS': config['num_jobs'],
                     'START_NUM': config['start_num'],
