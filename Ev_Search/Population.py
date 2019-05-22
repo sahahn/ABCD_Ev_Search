@@ -9,7 +9,6 @@ Created on Fri Jan 11 11:38:12 2019
 import numpy as np
 import copy, random, time
 
-
 from Key_Set import Key_Set
 
 class Population():
@@ -24,7 +23,7 @@ class Population():
         self.config = config
 
     def Get_Best_Score(self):
-        return max([indv.score for indv in self.individuals if indv.score != None])
+        return np.max([indv.score for indv in self.individuals if indv.score != None])
 
     def Get_Mean_Score_Std(self):
         return np.mean([indv.score_std for indv in self.individuals if indv.score_std != None])
