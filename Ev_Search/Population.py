@@ -13,11 +13,11 @@ from Key_Set import Key_Set
 
 class Population():
     
-    def __init__(self, config):
+    def __init__(self, config, key_names):
         
         self.n_indv = config['num_indv']
         self.new_rand = config['new_rand']
-        self.individuals = [Key_Set(config) for i in range(self.n_indv)]
+        self.individuals = [Key_Set(config, key_names) for i in range(self.n_indv)]
         self.best_over_time = []
         self.eval_times = []
         self.config = config

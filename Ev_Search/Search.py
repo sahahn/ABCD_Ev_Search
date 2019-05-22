@@ -28,6 +28,8 @@ with open(args.config, 'rb') as output:
 
 #Read in data only once at start
 data = pd.read_csv(config['loc'])
+key_names = list(data)
+key_names.remove('score')
 X = np.array(data.drop(['score'], axis=1))
 y = np.array(data['score'])
 data = (X,y)
@@ -43,7 +45,7 @@ if args.load == 1:
 elif args.load == 0:
     
     print('Init Population')
-    pop = Population(config)
+    pop = Population(config, key_names)
     pop.Evaluate(data)
    
 elif args.load == 2:

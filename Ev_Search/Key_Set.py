@@ -12,10 +12,10 @@ from loaders import load_key_names
 
 class Key_Set():
     
-    def __init__(self, config):
+    def __init__(self, config, key_names):
 
         self.config = config
-        self.key_names = load_key_names(self.config['loc'])
+        self.key_names = key_names
         self.n_options = len(self.key_names)
         self.keys = random.sample(range(self.n_options), self.config['start_num'] + random.randint(0,2))
         self.score = None
