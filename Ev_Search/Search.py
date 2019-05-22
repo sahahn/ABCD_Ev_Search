@@ -7,7 +7,7 @@ Created on Fri Jan 11 11:25:00 2019
 """
 
 from Population import Population
-import argparse, pickle, 
+import argparse, pickle
 import pandas as pd
 import numpy as np
 
