@@ -109,6 +109,9 @@ config['kill_all_command'] = 'KILL_ALL'
 #Starting number to append to each job (only change from 1 if adding more populations on after queued)
 config['start_key_num'] = 1
 
+#Number of generations to force a save
+config['save_every'] = 50
+
 #SETTINGS FOR LOADING THE INITIAL DATA FILE
 #-------------------------------
 

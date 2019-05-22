@@ -66,7 +66,9 @@ for i in range(1, config['num_gens']):
     
     print('Current best: ', pop.Get_Best_Score())
     pop.Fill()
-    save_population(pop, args.path)
+
+    if i % config['save_every'] == 0:
+        save_population(pop, args.path)
      
 print('Average New Evaluation Time: ', pop.Get_Mean_Eval_Time())
 pop.Print_Scores()
