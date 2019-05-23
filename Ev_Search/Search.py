@@ -7,9 +7,14 @@ Created on Fri Jan 11 11:25:00 2019
 """
 
 from Population import Population
-import argparse, pickle
+import argparse, pickle, os, sys
 import pandas as pd
 import numpy as np
+
+def check_dr(spot):
+
+    if os.path.isfile(spot):
+        sys.exit()
 
 def save_population(pop, location):
     
@@ -76,6 +81,10 @@ for i in range(1, config['num_gens']):
 
     if i % config['save_every'] == 0:
         save_population(pop, args.path)
+
+    end_spot1 = os.path.join(config['main_dr'], config['kill_all_command'])
+    end_spot2 = os.path.join(config['main_dr'], config['kill_jobs_command'])
+    check_dr(end_spot1, end_spot2)
      
 print('Average New Evaluation Time: ', pop.Get_Mean_Eval_Time())
 pop.Print_Scores()
