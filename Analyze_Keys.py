@@ -85,7 +85,7 @@ class Analysis():
             pop = self.pops[cnt]
             cnt += 1
 
-            score, val_score = Get_Best_Score_And_Val()
+            score, val_score = pop.Get_Best_Score_And_Val()
             n_gens, size, score_std = pop.Get_Num_Gens(),  pop.Get_Mean_Key_Size(), pop.Get_Mean_Score_Std()
             print('Pop -', i, 'Num Gens: ', n_gens, 'Score:', score, 'Mean Size:', size, 'Mean Score Std: ', score_std)
 
