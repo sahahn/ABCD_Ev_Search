@@ -21,6 +21,7 @@ class Population():
         self.best_over_time = []
         self.eval_times = []
         self.config = config
+        self.key_names = key_names
 
     def Get_Best_Score(self):
         return np.max([indv.score for indv in self.individuals if indv.score != None])
@@ -76,7 +77,7 @@ class Population():
             self.add_mutated()
             
         for i in range(self.new_rand):
-            self.individuals.append(Key_Set(self.config))
+            self.individuals.append(Key_Set(self.config, self.key_names))
 
     def Print_Scores(self):
         '''Print out all indiviudals with scores '''
