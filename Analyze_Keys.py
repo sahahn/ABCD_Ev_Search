@@ -87,7 +87,7 @@ class Analysis():
 
             score, val_score = pop.Get_Best_Score_And_Val()
             n_gens, size, score_std = pop.Get_Num_Gens(),  pop.Get_Mean_Key_Size(), pop.Get_Mean_Score_Std()
-            print('Pop -', i, 'Num Gens: ', n_gens, 'Score:', score, 'Mean Size:', size, 'Mean Score Std: ', score_std)
+            print('Pop -', i, 'Num Gens: ', n_gens, 'Score:', score, 'Val Score:', val_score, 'Mean Size:', size, 'Mean Score Std: ', score_std)
 
     def Plot_Best_By_Generation(self):
 
