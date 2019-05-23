@@ -33,7 +33,7 @@ def Run_Evaluation(keys, config, data):
 
         
 
-    return score, score_std, val_score
+    return score, score_std
 
 
 def Get_Validation_Score(keys, config, data, val_data):
