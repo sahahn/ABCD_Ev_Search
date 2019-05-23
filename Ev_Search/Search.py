@@ -84,7 +84,8 @@ for i in range(1, config['num_gens']):
 
     end_spot1 = os.path.join(config['main_dr'], config['kill_all_command'])
     end_spot2 = os.path.join(config['main_dr'], config['kill_jobs_command'])
-    check_dr(end_spot1, end_spot2)
+    check_dr(end_spot1)
+    check_dr(end_spot2)
      
 print('Average New Evaluation Time: ', pop.Get_Mean_Eval_Time())
 pop.Print_Scores()
