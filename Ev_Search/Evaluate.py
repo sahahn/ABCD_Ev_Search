@@ -47,7 +47,7 @@ def Get_Validation_Score(keys, config, data, val_data):
     if config['binary']:
         val_score = 0
     else:
-        val_score = test_regression_model(
+        val_score = ML.test_regression_model(
                                     X, y,
                                     X_val, y_val,
                                     model_type=config['model_type'],
