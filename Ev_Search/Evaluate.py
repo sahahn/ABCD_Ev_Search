@@ -31,7 +31,34 @@ def Run_Evaluation(keys, config, data):
                                     target_transform=config['target_transform']
                                     )
 
-    return score, score_std
+        
+
+    return score, score_std, val_score
+
+
+def Get_Validation_Score(keys, config, data, val_data):
+
+
+    keys.sort()
+    X,y = data[0][:,keys], data[1]
+    X_val,y_val = val_data[0][:,keys], val_data[1]
+
+
+    if config['binary']:
+        val_score = 0
+    else:
+        val_score = test_regression_model(
+                                    X, y,
+                                    X_val, y_val,
+                                    model_type=config['model_type'],
+                                    int_cv=config['n_splits'],
+                                    metric=config['metric'],
+                                    target_transform=config['target_transform']
+                                    )
+
+    return val_score
+
+
 
 
 

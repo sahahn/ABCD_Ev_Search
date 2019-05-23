@@ -179,12 +179,18 @@ config['output_key_loc'] = os.path.join(config['stats_loc'], config['name'] + '_
 #Location to save a plot of performance over time
 config['output_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_performance_plot.jpg')
 
+#Location to save a plot of best pop over time with validation
+config['output_val_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_validation_plot.jpg')
+
 
 #SETTINGS FOR EACH RANDOM SEARCH
 #-------------------------------
 
 #Location of the pre-processed data csv within the search used in Evaluate.py
 config['loc'] = config['proc_data_path'] + '_data.csv'
+
+#Location of the pre-processed validation-data csv within the search used in Evaluate.py
+config['val_loc'] = config['proc_data_path'] + '_val_data.csv'
 
 #If true then binary settings, otherwise regression
 config['binary'] = False

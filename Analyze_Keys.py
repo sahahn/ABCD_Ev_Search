@@ -84,8 +84,9 @@ class Analysis():
 
             pop = self.pops[cnt]
             cnt += 1
-            
-            n_gens, score, size, score_std = pop.Get_Num_Gens(), pop.Get_Best_Score(), pop.Get_Mean_Key_Size(), pop.Get_Mean_Score_Std()
+
+            score, val_score = Get_Best_Score_And_Val()
+            n_gens, size, score_std = pop.Get_Num_Gens(),  pop.Get_Mean_Key_Size(), pop.Get_Mean_Score_Std()
             print('Pop -', i, 'Num Gens: ', n_gens, 'Score:', score, 'Mean Size:', size, 'Mean Score Std: ', score_std)
 
     def Plot_Best_By_Generation(self):
@@ -98,7 +99,22 @@ class Analysis():
         plt.xlabel('Generation')
         plt.ylabel('Score')
         plt.title('Population Performance')
-        plt.savefig(self.config['output_performance_graph_loc'])
+        plt.savefig(self.config['output_performance_graph_loc'], dpi=100)
+
+    def Plot_Best_Val_Test(self):
+
+        ind = np.argmax([pop.Get_Best_Score() for pop in self.pops])
+        best_pop = self.pops[ind]
+        scores, val_scores = best_pop.best_over_time, best_pop.best_over_time_val
+        
+        plt.plot(list(range(1, len(scores)+1)), scores, label='Scores')
+        plt.plot(list(range(1, len(val_scores)+1)), val_scores, label='Val Scores')
+
+        plt.xlabel('Generation')
+        plt.ylabel('Score')
+        plt.title('Performance vs. Val')
+        plt.legend()
+        plt.savefig(self.config['output_val_graph_loc'], dpi=100)
 
 if __name__ == "__main__":
     
@@ -148,6 +164,7 @@ if __name__ == "__main__":
         a.Print_Mean_Score_Std()
         a.Print_Pop_Level_Info()
         a.Plot_Best_By_Generation()
+        a.Plot_Best_Val_Test()
 
 
 

@@ -7,7 +7,7 @@ Created on Fri Jan 11 11:25:41 2019
 """
 
 import random
-from Evaluate import Run_Evaluation
+from Evaluate import Run_Evaluation, Get_Validation_Score
 from loaders import load_key_names
 
 class Key_Set():
@@ -18,12 +18,15 @@ class Key_Set():
         self.key_names = key_names
         self.n_options = len(self.key_names)
         self.keys = random.sample(range(self.n_options), self.config['start_num'] + random.randint(0,2))
-        self.score = None
-        self.score_std = None
+        self.score, self.score_std, self.val_score = None, None, None
         
     def Evaluate(self, data):
 
         self.score, self.score_std = Run_Evaluation(self.keys, self.config, data)
+
+    def Get_Val_Score(self, data, val_data):
+
+        self.val_score = Get_Validation_Score(self.keys, self.config, data, val_data)
         
     def Compare(self, other):
 

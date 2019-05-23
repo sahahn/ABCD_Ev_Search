@@ -19,6 +19,7 @@ class Population():
         self.new_rand = config['new_rand']
         self.individuals = [Key_Set(config, key_names) for i in range(self.n_indv)]
         self.best_over_time = []
+        self.best_over_time_val = []
         self.eval_times = []
         self.config = config
         self.key_names = key_names
@@ -35,13 +36,30 @@ class Population():
     def Get_Mean_Eval_Time(self):
         return np.mean(self.eval_times)
 
+    def Get_Best_Score_And_Val(self):
+        
+        best_indv = self.get_best_score_indv()
+        return best_indv.score, best_indv.val_score
+
     def Get_Num_Gens(self):
         return len(self.best_over_time)
 
-    def add_best(self):
-        self.best_over_time.append(self.Get_Best_Score())        
+    def get_best_score_indv(self):
 
-    def Evaluate(self, data, type='None'):
+        ind = np.argmax([indv.score if indv.score != None else -1000 for indv in self.individuals])
+        best_indv = self.individuals[ind]
+
+        return best_indv
+
+    def add_best(self, data, val_data):
+        
+        self.best_over_time.append(self.Get_Best_Score())
+
+        best_indv = self.get_best_score_indv()
+        best_indv.Get_Val_Score(data, val_data)
+        self.best_over_time_val.append(best_indv.val_score)
+
+    def Evaluate(self, data, val_data, type='None'):
         
         if type == 'None':
 
@@ -64,7 +82,7 @@ class Population():
                 if indv.score != None:
                     indv.Evaluate(data)
    
-        self.add_best()
+        self.add_best(data, val_data)
 
     def Tournament(self):
         

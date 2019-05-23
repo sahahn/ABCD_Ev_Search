@@ -74,6 +74,21 @@ def evaluate_regression_model(X, y, model_type='elastic', n_splits=3, n_repeats=
     return np.mean(macro_scores), np.std(macro_scores)
 
 
+def test_regression_model(X, y, X_test, y_test, model_type='elastic', int_cv=3, metric='r2', target_transform=None):
+
+    metric_func = r2_score
+    if metric == 'mse':
+        metric_func = mean_squared_error
+
+    if target_transform == 'log':
+        y_trans = np.log1p(y)
+        
+    model = train_regression_model(X_train, y_train, model_type, int_cv)
+    score = get_regression_score(model, X_test, y_test, metric_func, target_transform)
+
+    return score
+
+
 def evaluate_binary_model(X, y, n_splits=3, n_repeats=2, int_cv=3, class_weight='balanced'):
 
     scores = []
