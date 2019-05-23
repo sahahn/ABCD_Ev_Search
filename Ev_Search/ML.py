@@ -82,10 +82,13 @@ def test_regression_model(X, y, X_test, y_test, model_type='elastic', int_cv=3, 
 
     if target_transform == 'log':
         y_trans = np.log1p(y)
-        
-    model = train_regression_model(X_train, y_train, model_type, int_cv)
-    score = get_regression_score(model, X_test, y_test, metric_func, target_transform)
 
+    if target_transform != None:
+        model = train_regression_model(X, y_trans, model_type, int_cv)
+    else:
+        model = train_regression_model(X, y, model_type, int_cv)
+
+    score = get_regression_score(model, X_test, y_test, metric_func, target_transform)
     return score
 
 
