@@ -179,6 +179,9 @@ config['output_key_loc'] = os.path.join(config['stats_loc'], config['name'] + '_
 #Location to save a plot of performance over time
 config['output_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_performance_plot.jpg')
 
+#Location to save a plot of performance over time
+config['output_val_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_val_performance_plot.jpg')
+
 #Location to save a plot of best pop over time with validation
 config['output_val_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_validation_plot.jpg')
 

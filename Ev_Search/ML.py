@@ -1,6 +1,9 @@
 from sklearn.model_selection import RepeatedStratifiedKFold, RepeatedKFold, RandomizedSearchCV
 from sklearn.metrics import roc_auc_score, mean_squared_error, r2_score
-from sklearn.linear_model import LogisticRegressionCV, ElasticNetCV, LinearRegression
+from sklearn.linear_model import LogisticRegressionCV, ElasticNetCV, LinearRegression, OrthogonalMatchingPursuitCV, LarsCV, RidgeCV
+from sklearn.svm import LinearSVR
+from xgboost import XGBRegressor
+from lightgbm import LGBMRegressor
 import numpy as np
 import warnings
 
@@ -27,10 +30,21 @@ def get_binary_score(model, X, y):
     
 def train_regression_model(X, y, model_type='elastic', cv=3):
 
-    if model_type == 'elastic':
-        model = ElasticNetCV(cv=cv)
-    elif model_type == 'linear':
+
+    if model_type == 'linear':
         model = LinearRegression(fit_intercept=True)
+    elif model_type == 'elastic cv':
+        model = ElasticNetCV(cv=cv)
+    elif model_type == 'omp cv':
+        model = OrthogonalMatchingPursuitCV(cv=cv)
+    elif model_type == 'lars cv':
+        model = LarsCV(cv=cv)
+    elif model_type == 'ridge cv':
+        model = RidgeCV(cv=cv)
+    elif model_type == 'simple xgboost':
+        model = XGBRegressor()
+    elif model_type == 'simple lightgbm':
+        model = LGBMRegressor()
 
     model.fit(X, y)
     return model
@@ -62,7 +76,7 @@ def evaluate_regression_model(X, y, model_type='elastic', n_splits=3, n_repeats=
         else:
             X_train, y_train = X[train_ind], y[train_ind]
         
-        X_test, y_test = X[test_ind], y[test_ind]     
+        X_test, y_test = X[test_ind], y[test_ind]
         
         model = train_regression_model(X_train, y_train, model_type, int_cv)
         score = get_regression_score(model, X_test, y_test, metric_func, target_transform)

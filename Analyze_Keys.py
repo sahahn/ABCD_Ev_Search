@@ -92,7 +92,7 @@ class Analysis():
     def Plot_Best_By_Generation(self):
 
         scores_over_time = [pop.best_over_time for pop in self.pops]
-
+    
         for scores in scores_over_time:
             plt.plot(list(range(1, len(scores)+1)), scores)
 
@@ -100,6 +100,17 @@ class Analysis():
         plt.ylabel('Score')
         plt.title('Population Performance')
         plt.savefig(self.config['output_performance_graph_loc'], dpi=100)
+        plt.cla()
+
+        val_scores_over_time = [pop.best_over_time_val for pop in self.pops]
+
+        for scores in val_scores_over_time:
+            plt.plot(list(range(1, len(scores)+1)), scores)
+
+        plt.xlabel('Generation')
+        plt.ylabel('Score')
+        plt.title('Val Population Performance')
+        plt.savefig(config['output_val_performance_graph_loc'], dpi=100)
         plt.cla()
 
     def Plot_Best_Val_Test(self):
