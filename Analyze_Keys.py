@@ -100,6 +100,7 @@ class Analysis():
         plt.ylabel('Score')
         plt.title('Population Performance')
         plt.savefig(self.config['output_performance_graph_loc'], dpi=100)
+        plt.cla()
 
     def Plot_Best_Val_Test(self):
 
@@ -115,7 +116,8 @@ class Analysis():
         plt.title('Performance vs. Val')
         plt.legend()
         plt.savefig(self.config['output_val_graph_loc'], dpi=100)
-
+        plt.cla()
+ 
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Provides quick analysis tools')
