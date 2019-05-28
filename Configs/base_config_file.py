@@ -126,7 +126,7 @@ config['datasets'] = {'nBack_Destr_NDA'     : True,
 
 config['covariates'] = {'include_any'       : True,
                         'sex'               : True,
-                        'race':             : True,
+                        'race'              : True,
                         'parent_education'  : True,
                         'parent_comb_income': True,
                         'normalize'         : True 
