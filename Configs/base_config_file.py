@@ -12,8 +12,6 @@ config['key_name'] = config['name'] + '_set'
 #Location/name to store the pickle config file
 config['config_loc'] = config['name'] + '.pkl'
 
-#Jobs are either run and submitted independently or if == False, then submit as batched jobs
-config['single_jobs'] = True
 
 #GENERAL EV. SEARCH CONFIGS
 #-------------------------
@@ -115,6 +113,25 @@ config['save_every'] = 50
 #SETTINGS FOR LOADING THE INITIAL DATA FILE
 #-------------------------------
 
+config['datasets'] = {'nBack_Destr_NDA'     : True,
+                      'nBack_Destr_Minio'   : False,
+                      'sMRI_Destr_NDA'      : True,
+                      'sMRI_Destr_Minio'    : False,
+                      'MID_Destr_Minio'     : False,
+                      'rsfMRI_Gordon_NDA'   : True,
+                      'rsfMRI_Destr_NDA'    : False,
+                      'SST_Destr_NDA'       : False,
+                      'SST_Destr_Minio'     : False
+                      }
+
+config['covariates'] = {'include_any'       : True,
+                        'sex'               : True,
+                        'race':             : True,
+                        'parent_education'  : True,
+                        'parent_comb_income': True,
+                        'normalize'         : True 
+                        }
+
 #Boolean to override existing proccessed data
 #Note: If not ever created for this unique config['key_name'], then then new data will be created regardless
 config['create_new_data'] = True
@@ -123,21 +140,21 @@ config['create_new_data'] = True
 config['i_keys'] = None
 
 #Basic setting that will drop any columns when reading the dataset if any of the keys show up in that features name
-config['d_keys'] = ['norm-mean', '-std', 'fold-ind', 'gaus-curv', 'curv-ind']
+config['d_keys'] = None #['norm-mean', '-std', 'fold-ind', 'gaus-curv', 'curv-ind']
 
 #Location of the directory where data files are stored
-data_dr = os.path.join(config['ev_search_dr'], 'Data')
+config['data_dr'] = os.path.join(config['ev_search_dr'], 'Data')
 
 #Location of the csv with column names subject and score
-config['scores_loc'] =  os.path.join(data_dr, 'All_ADHD_IDs.csv')
+config['scores_loc'] =  os.path.join(config['data_dr'], 'All_ADHD_IDs.csv')
 
-#Location of the csv with subject and raw measurement data (no demographics as of right now)
-config['raw_data_loc'] = os.path.join(data_dr, 'Raw_ABCD_Struc_Data.csv')
+#Location of the csv with subject and raw measurement data, for a custom dataset, otherwise set to None
+config['raw_data_loc'] = None  #os.path.join(config['data_dr'], 'Raw_ABCD_Struc_Data.csv')
 
 #Test and val ids should simply be a test or csv file with no headers and one subject per line!
 #Location containing a list of test subject ID's
 #Set to None if creating one from provided data
-config['test_id_loc'] = os.path.join(data_dr, 'ABCD_testsetIDs.csv')
+config['test_id_loc'] = os.path.join(config['data_dr'], 'ABCD_testsetIDs.csv')
 
 #Optionally provide a location contained a saved list of validation set subject ID's
 #Set to None if creating on from test set
@@ -158,32 +175,13 @@ config['save_ids'] = True
 
 #Full path where the proccessed data is stored, passed as output_loc
 # e.g. config['proc_data_path'] + _data.cvs or + test_data.csv, _val_data.csv
-config['proc_data_path'] = os.path.join(data_dr, config['name'])
+config['proc_data_path'] = os.path.join(config['data_dr']), config['name'])
 
 #Type of scaling to preform on data, standard or robust right now
 config['scale_type'] = 'robust'
 
 #Extra parameters if robust scaling is chosen
 config['robust_extra_params'] = {'with_centering': True, 'with_scaling': True, 'quantile_range': (5, 95)}
-
-
-#ANALYSIS PARAMS
-#-------------------------------
-
-#Location/name of the folder to store analysis output
-config['stats_loc'] = os.path.join(config['main_dr'], 'Stats')
-
-#Location to output all of the key sets and score in text
-config['output_key_loc'] = os.path.join(config['stats_loc'], config['name'] + '_all_keys.txt')
-
-#Location to save a plot of performance over time
-config['output_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_performance_plot.jpg')
-
-#Location to save a plot of performance over time
-config['output_val_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_val_performance_plot.jpg')
-
-#Location to save a plot of best pop over time with validation
-config['output_val_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_validation_plot.jpg')
 
 
 #SETTINGS FOR EACH RANDOM SEARCH
@@ -198,7 +196,7 @@ config['val_loc'] = config['proc_data_path'] + '_val_data.csv'
 #If true then binary settings, otherwise regression
 config['binary'] = False
 
-#For regression (binary=False) model type option are 'linear' for LinearRegression and 'elastic' for elasticnetCV
+#For regression (binary=False) many model type options
 config['model_type'] = 'linear'
 
 #Number of times to repeat CV search
@@ -219,6 +217,27 @@ config['metric'] = 'r2'
 #Type of transform to compute on the target regression variable (only for regression)
 #Options are: 'log' to preform a log1p transform, or None
 config['target_transform'] = None
+
+#ANALYSIS PARAMS
+#-------------------------------
+
+#Location/name of the folder to store analysis output
+config['stats_loc'] = os.path.join(config['main_dr'], 'Stats')
+
+#Location to output all of the key sets and score in text
+config['output_key_loc'] = os.path.join(config['stats_loc'], config['name'] + '_all_keys.txt')
+
+#Location to save a plot of performance over time
+config['output_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_performance_plot.jpg')
+
+#Location to save a plot of performance over time
+config['output_val_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_val_performance_plot.jpg')
+
+#Location to save a plot of best pop over time with validation
+config['output_val_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_validation_plot.jpg')
+
+#Keep as True, False is broken right now
+config['single_jobs'] = True               
 
 with open(config['config_loc'], 'wb') as output:
     pickle.dump(config, output)

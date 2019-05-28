@@ -1,5 +1,7 @@
 temp.script
 Ev_Search/Data/
+Ev_Search/Data/*
+Data/
 *.o* #Vacc output files
 nohup.out
 *.pkl
