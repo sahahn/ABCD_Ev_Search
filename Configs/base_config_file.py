@@ -175,7 +175,7 @@ config['save_ids'] = True
 
 #Full path where the proccessed data is stored, passed as output_loc
 # e.g. config['proc_data_path'] + _data.cvs or + test_data.csv, _val_data.csv
-config['proc_data_path'] = os.path.join(config['data_dr']), config['name'])
+config['proc_data_path'] = os.path.join(config['data_dr'], config['name'])
 
 #Type of scaling to preform on data, standard or robust right now
 config['scale_type'] = 'robust'
