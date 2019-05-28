@@ -76,7 +76,7 @@ def load_covars_from_default(config):
         for race in races:
             to_include.append(race)
 
-    covars = convars[to_include]
+    covars = covars[to_include]
     covars = covars.dropna()
 
     if config['covariates']['normalize']:
