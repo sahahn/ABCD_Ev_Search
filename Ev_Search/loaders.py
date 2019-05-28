@@ -204,6 +204,8 @@ def process_new_dataset(config):
         
         covars = load_covars_from_default(config)
         covar_keys = list(covars)
+        covar_keys.remove('subject')
+        
         print('Shape of data before merge with co-variates: ', np.shape(data))
         data = pd.merge(data, covars, on='subject')
         print('Shape of data after merge with co-variates: ', np.shape(data))
