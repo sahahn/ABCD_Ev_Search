@@ -183,6 +183,9 @@ config['scale_type'] = 'robust'
 #Extra parameters if robust scaling is chosen
 config['robust_extra_params'] = {'with_centering': True, 'with_scaling': True, 'quantile_range': (5, 95)}
 
+#Either None or the the num/% to take of either side
+config['winsorize'] = .001
+
 
 #SETTINGS FOR EACH RANDOM SEARCH
 #-------------------------------

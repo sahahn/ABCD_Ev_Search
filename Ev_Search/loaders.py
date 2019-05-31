@@ -3,6 +3,7 @@ import numpy as np
 import os
 from sklearn.preprocessing import StandardScaler, RobustScaler
 from sklearn.model_selection import train_test_split
+from scipy.stats.mstats import winsorize
 
 
 def load_data(dr, loc):
@@ -129,7 +130,7 @@ def common_corrections(in_scores):
 
     return in_scores
 
-def filter_data(data, i_keys, d_keys):
+def filter_data(data, i_keys=None, d_keys=None):
     
     if d_keys != None:
 
@@ -144,6 +145,8 @@ def filter_data(data, i_keys, d_keys):
         data = data.drop(list(to_remove), axis=1)
         
     if i_keys != None:
+
+        i_keys += ['subject', 'score']
         
         to_remove = set()
         col_names = list(data)
@@ -240,15 +243,15 @@ def process_new_dataset(config):
     elif config['scale_type'] == 'robust':
         scaler = RobustScaler(**config['robust_extra_params'])
 
+    keys = list(train_data)
+    keys.remove('score')
+
+    if config['covariates']['include_any']:
+        for k in covar_keys:
+            keys.remove(k)
+
     if scaler != None:
         print('Scaling data with', config['scale_type'], 'scaling')
-        
-        keys = list(train_data)
-        keys.remove('score')
-
-        if config['covariates']['include_any']:
-            for k in covar_keys:
-                keys.remove(k)
         
         train_data[keys] = scaler.fit_transform(train_data[keys])
 
@@ -256,6 +259,13 @@ def process_new_dataset(config):
             test_data[keys] = scaler.transform(test_data[keys])
         if len(val_data) > 0:
             val_data[keys] = scaler.transform(val_data[keys])
+
+    if config['winsorize'] != None:
+        print('Winzorizing data with', config['winsorize'])
+
+        train_data[keys] = winsorize(train_data[keys], (config['winsorize']), axis=0)
+        val_data[keys] = winsorize(val_data[keys], (config['winsorize']), axis=0)
+        test_data[keys] = winsorize(test[keys], (config['winsorize']), axis=0)
 
     print('Saving data to: ', config['proc_data_path'])
     train_data.to_csv(config['proc_data_path'] + '_data.csv', index=False)
