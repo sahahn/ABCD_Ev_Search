@@ -268,7 +268,7 @@ def process_new_dataset(config):
 
         train_data[keys] = winsorize(train_data[keys], (config['winsorize']), axis=0)
         val_data[keys] = winsorize(val_data[keys], (config['winsorize']), axis=0)
-        test_data[keys] = winsorize(test[keys], (config['winsorize']), axis=0)
+        test_data[keys] = winsorize(test_data[keys], (config['winsorize']), axis=0)
 
     print('Saving data to: ', config['proc_data_path'])
     train_data.to_csv(config['proc_data_path'] + '_data.csv', index=False)
