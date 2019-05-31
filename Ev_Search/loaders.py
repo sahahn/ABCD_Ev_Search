@@ -7,6 +7,7 @@ from scipy.stats.mstats import winsorize
 
 
 def load_data(dr, loc):
+    print('Reading data from: ', loc)
 
     data = pd.read_csv(os.path.join(dr, loc))
     data = data.drop_duplicates(subset = 'subject')
@@ -36,6 +37,8 @@ def load_data_from_default(config):
         dfs.append(load_data(config['data_dr'], 'SST_Destrieux_NDA.csv'))
     if config['datasets']['SST_Destr_Minio']:
         dfs.append(load_data(config['data_dr'], 'SST_Destrieux_Minio.csv'))
+
+    print('Num datasets to merge = ', len(dfs))
 
     data = dfs[0]
     for i in range(1, len(dfs)):
