@@ -28,8 +28,9 @@ class Analysis():
     def load_all_populations(self):
         config = self.config
 
+        print('Loading: ', end='')
         for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
-            print(i)
+            print(i, '- ', end='')
             pop_name = os.path.join(config['ev_search_dr'], config['key_dr'], config['key_name'] + str(i) + '.pkl')
  
             with open(pop_name, 'rb') as output:
