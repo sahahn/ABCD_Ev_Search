@@ -240,6 +240,18 @@ config['stats_loc'] = os.path.join(config['main_dr'], 'Stats')
 #Location to output all of the key sets and score in text
 config['output_key_loc'] = os.path.join(config['stats_loc'], config['name'] + '_all_keys.txt')
 
+#Location to store just best sets of keys
+config['output_best_loc'] = os.path.join(config['stats_loc'], config['name'] + '_best_keys.txt')
+
+#Location of saved key_sets to limit features from, set to None to not limit features
+config['limit_features_from'] = config['output_best_loc']
+
+#Optional threshold in which to filter out key sets from consideration
+config['feature_score_lim'] = 0
+
+#Number of top features to keep (if less then 1, treat as keep % of total # of features)
+config['keep_top_x'] = .5
+
 #Location to save a plot of performance over time
 config['output_performance_graph_loc'] = os.path.join(config['stats_loc'], config['name'] + '_performance_plot.jpg')
 

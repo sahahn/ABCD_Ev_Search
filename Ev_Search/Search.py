@@ -7,6 +7,7 @@ Created on Fri Jan 11 11:25:00 2019
 """
 
 from Population import Population
+import Tools_For_Anal as A
 import argparse, pickle, os, sys
 import pandas as pd
 import numpy as np
@@ -34,6 +35,21 @@ with open(args.config, 'rb') as output:
 #Read in data only once at start
 data = pd.read_csv(config['loc'])
 val_data = pd.read_csv(config['val_loc'])
+
+#If set to in the config, keep only a subset of all avaliable features for the search
+if config['limit_features_from'] != None:
+    if os.path.isfile(config['limit_features_from']):
+        
+        items = A.load_file(config['limit_features_from'])
+        fc, feat_count = A.get_weighted_feature_counts(items, score_lim=config['feature_score_lim'])
+        
+        if config['keep_top_x'] < 1:
+            n = int(len(data) // config['keep_top_x'])
+        else:
+            n = int(config['keep_top_x'])
+        
+        top_feats = A.get_sorted_labels(fc, n) + ['score']
+        data, val_data = data[top_feats], val_data[top_feats]
 
 key_names = list(data)
 key_names.remove('score')

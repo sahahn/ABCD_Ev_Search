@@ -62,6 +62,18 @@ class Analysis():
                     f.write(feat + ',')
                 f.write('\n')
 
+    def Add_Best_Keys_To_File(self):
+
+        best_key_sets = [pop.get_best_score_indv() for pop in self.pops]
+
+        with open(self.config['output_best_loc'], 'a') as f:
+            for indv in best_key_sets:
+                
+                f.write(str(indv.score) + ': ')
+                feat_names = indv.get_key_names()
+                for feat in feat_names:
+                    f.write(feat + ',')
+                f.write('\n')
     
     def Print_Mean_Eval_Time(self):
 
@@ -162,6 +174,9 @@ if __name__ == "__main__":
 
     if args.command == 'save':
         a.Save_Keys_To_File()
+        
+    elif args.command == 'add':
+        a.Add_Best_Keys_To_File()
 
     elif args.command == 'best':
         a.Print_Best()

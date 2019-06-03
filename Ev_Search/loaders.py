@@ -274,7 +274,6 @@ def process_new_dataset(config):
             outer_val_data[keys] = scaler.transform(outer_val_data[keys])
         if len(val_data) > 0:
             val_data[keys] = scaler.transform(val_data[keys])
-        
 
     print('Saving data to: ', config['proc_data_path'])
     train_data.to_csv(config['proc_data_path'] + '_data.csv', index=False)
