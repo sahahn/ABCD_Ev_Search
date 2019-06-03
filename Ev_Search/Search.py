@@ -91,3 +91,6 @@ print('Average New Evaluation Time: ', pop.Get_Mean_Eval_Time())
 pop.Print_Scores()
 save_population(pop, args.path)
 
+
+
+

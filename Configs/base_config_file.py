@@ -12,6 +12,9 @@ config['key_name'] = config['name'] + '_set'
 #Location/name to store the pickle config file
 config['config_loc'] = config['name'] + '.pkl'
 
+#Optional flag to run everything locally vs. on the VACC
+config['run_local'] = True
+
 
 #GENERAL EV. SEARCH CONFIGS
 #-------------------------

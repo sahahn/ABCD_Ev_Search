@@ -12,6 +12,23 @@ import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+class Ensemble_Model():
+
+    def __init__(self, X, y, model_names, cv=3, regresson=True):
+
+        self.models = []
+        
+        if regresson:
+            for name in model_names:
+                model = train_regression_model(X, y, model_type=name, cv=cv)
+                self.models.append(model)
+
+    def predict(self, X):
+
+        preds = [model.predict(X) for model in self.models]
+        return np.mean(preds, axis=0)
+
+
 def get_regression_score(model, X, y, metric_func, target_transform):
     
     preds = model.predict(X)
@@ -122,8 +139,12 @@ def evaluate_regression_model(X, y, model_type='linear', n_splits=3, n_repeats=2
             X_train, y_train = X[train_ind], y[train_ind]
         
         X_test, y_test = X[test_ind], y[test_ind]
+
+        if type(model_type) == list:
+            model = Ensemble_Model(X_train, y_train, model_type, int_cv, regresson=True)
+        else:
+            model = train_regression_model(X_train, y_train, model_type, int_cv)
         
-        model = train_regression_model(X_train, y_train, model_type, int_cv)
         score = get_regression_score(model, X_test, y_test, metric_func, target_transform)
         scores.append(score)
 
@@ -140,10 +161,10 @@ def test_regression_model(X, y, X_test, y_test, model_type='linear', int_cv=3, m
         metric_func = mean_squared_error
 
     if target_transform == 'log':
-        y_trans = np.log1p(y)
+        y = np.log1p(y)
 
-    if target_transform != None:
-        model = train_regression_model(X, y_trans, model_type, int_cv)
+    if type(model_type) == list:
+        model = Ensemble_Model(X, y, model_type, int_cv, regresson=True)
     else:
         model = train_regression_model(X, y, model_type, int_cv)
 

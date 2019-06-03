@@ -122,7 +122,11 @@ def change_temp_scripts(load):
     os.system('chmod u+x ' + config['subjob_name'])
 
 def run_job(temp_name):
-    os.system('qsub ' + temp_name)
+
+    if config['run_local']:
+        os.system('bash ' + temp_name)
+    else:
+        os.system('qsub ' + temp_name)
 
 def init_jobs(arg):
 

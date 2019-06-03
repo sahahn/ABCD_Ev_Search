@@ -10,6 +10,7 @@ BMI_set
 progress
 KILL_TASKS
 *_progress
+Stats/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
