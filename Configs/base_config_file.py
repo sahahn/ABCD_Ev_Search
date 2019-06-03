@@ -25,6 +25,9 @@ config['num_indv'] = 100
 #Number of generations to evaluate over, in each VACC job
 config['num_gens'] = 300
 
+
+config['early_stop_rounds'] = 50
+
 #Number of new random Key_Sets to add in each Fill
 config['new_rand'] = 3
 

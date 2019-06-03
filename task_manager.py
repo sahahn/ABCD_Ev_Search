@@ -6,7 +6,7 @@ Created on Fri Jan 25 13:30:35 2019
 @author: sage
 """
 
-import os, time, sys, argparse, pickle
+import os, time, sys, argparse, pickle, subprocess
 from Ev_Search.loaders import process_new_dataset
 
 #Load in the config file with args as a global variable

@@ -50,7 +50,13 @@ if args.load == 1:
     with open(args.path, 'rb') as output:
         pop = pickle.load(output)
     
-    pop.Evaluate(data, val_data, type='New')
+    if config['early_stop_rounds'] != None:
+        if pop.Check_Rounds() < config['early_stop_rounds']:
+            pop.Evaluate(data, val_data, type='New')
+        else:
+            sys.exit()
+    else:
+        pop.Evaluate(data, val_data, type='New')
     
 elif args.load == 0:
     
@@ -72,14 +78,26 @@ pop.Fill()
 #Run rest of Generations
 for i in range(1, config['num_gens']):
     print('Starting Gen ', i)
-    
-    pop.Evaluate(data, val_data, type='New')
+
+
+    if config['early_stop_rounds'] != None:
+        rounds_since = pop.Check_Rounds()
+        
+        if rounds_since == 0:
+            save_population(pop, args.path)
+        if rounds_since < config['early_stop_rounds']:
+            pop.Evaluate(data, val_data, type='New')
+        else:
+            sys.exit()
+    else:
+        pop.Evaluate(data, val_data, type='New')
+
     pop.Tournament()
     
-    print('Current best: ', pop.Get_Best_Score())
+    print('Current best: ', pop.Get_Best_Score_And_Val())
     pop.Fill()
 
-    if i % config['save_every'] == 0:
+    if i % config['save_every'] == 0 and config['early_stop_rounds'] == None:
         save_population(pop, args.path)
 
     end_spot1 = os.path.join(config['main_dr'], config['kill_all_command'])

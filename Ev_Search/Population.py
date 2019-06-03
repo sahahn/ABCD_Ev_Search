@@ -24,6 +24,13 @@ class Population():
         self.config = config
         self.key_names = key_names
 
+    def Check_Rounds(self):
+
+        best_val = np.argmax(self.best_over_time_val) + 1
+        rounds_since = len(self.best_over_time_val) - best_val
+
+        return rounds_since
+
     def Get_Best_Score(self):
         return np.max([indv.score for indv in self.individuals if indv.score != None])
 
