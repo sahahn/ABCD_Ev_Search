@@ -15,12 +15,13 @@ from Population import Population
 
 class Analysis():
 
-    def __init__(self, config):
+    def __init__(self, config, val_pop_thresh=None):
 
         self.config = config
         
         self.pops = []
         self.key_sets = []
+        self.val_pop_thresh = val_pop_thresh
 
         self.load_all_populations()
         self.load_all_key_sets()
@@ -35,7 +36,13 @@ class Analysis():
  
             with open(pop_name, 'rb') as output:
                 pop = pickle.load(output)
-                self.pops.append(pop)
+                
+                if self.val_pop_thresh == None:
+                    self.pops.append(pop)
+                else:
+                    score, val_score = pop.Get_Best_Score_And_Val()
+                    if val_score > self.val_pop_thresh:
+                        self.pops.append(pop)
 
     def load_all_key_sets(self):
 
@@ -82,7 +89,8 @@ class Analysis():
         print('Population Level Statistics')
 
         cnt = 0
-        for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
+        #for i in range(config['start_key_num'], config['start_key_num']+config['num_jobs']):
+        for i in range(len(self.pops)):        
 
             pop = self.pops[cnt]
             cnt += 1
@@ -136,6 +144,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Provides quick analysis tools')
     parser.add_argument('config', type=str, help='Location/name of the pickled config file to use (can add .pkl automatically) + assumes to be in Configs folder')
     parser.add_argument('command', type=str, help='save - to save, best - to print the best score over all populations, time - to print the average evaluation time, summary - to print a summary')
+    parser.add_argument('thresh', type=float, nargs='?', help='Val threshold for loading population')
     args = parser.parse_args()
 
     cwd = os.getcwd()
@@ -149,7 +158,7 @@ if __name__ == "__main__":
 
     os.makedirs(config['stats_loc'], exist_ok=True)
     
-    a = Analysis(config)
+    a = Analysis(config, args.thresh)
 
     if args.command == 'save':
         a.Save_Keys_To_File()
