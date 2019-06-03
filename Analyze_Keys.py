@@ -180,6 +180,7 @@ if __name__ == "__main__":
         a.Print_Pop_Level_Info()
         a.Plot_Best_By_Generation()
         a.Plot_Best_Val_Test()
+        a.Save_Keys_To_File()
 
 
 
