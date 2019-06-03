@@ -79,7 +79,6 @@ pop.Fill()
 for i in range(1, config['num_gens']):
     print('Starting Gen ', i)
 
-
     if config['early_stop_rounds'] != None:
         rounds_since = pop.Check_Rounds()
         

@@ -226,6 +226,9 @@ def process_new_dataset(config):
     print('--Splitting Test Set--')
     train_data, test_data = preform_split(relevant_data, config['test_id_loc'], config['test_sz'], config['random_split_state'])
 
+    print('--Splitting Outer Validation Set--')
+    train_data, outer_val_data = preform_split(train_data, config['outer_val_id_loc'], config['outer_val_sz'], config['random_split_state'])
+
     print('--Splitting Validation Set--')
     train_data, val_data = preform_split(train_data, config['val_id_loc'], config['val_sz'], config['random_split_state'])
 
@@ -233,10 +236,12 @@ def process_new_dataset(config):
 
         save_subject_ids(train_data, config['proc_data_path'] + '_train_ids.txt')
         save_subject_ids(test_data, config['proc_data_path'] + '_test_ids.txt')
+        save_subject_ids(outer_val_data, config['proc_data_path'] + '_outer_val_ids.txt')
         save_subject_ids(val_data, config['proc_data_path'] + '_val_ids.txt')
 
     train_data = train_data.drop(['subject'], axis=1)
     test_data = test_data.drop(['subject'], axis=1)
+    outer_val_data = outer_val_data.drop(['subject'], axis=1)
     val_data = val_data.drop(['subject'], axis=1)
 
     scaler = None
@@ -261,22 +266,28 @@ def process_new_dataset(config):
         if len(test_data) > 0:
             test_data[keys] = scaler.transform(test_data[keys])
         if len(val_data) > 0:
+            outer_val_data[keys] = scaler.transform(outer_val_data[keys])
+        if len(val_data) > 0:
             val_data[keys] = scaler.transform(val_data[keys])
 
     if config['winsorize'] != None:
         print('Winzorizing data with', config['winsorize'])
 
         train_data[keys] = winsorize(train_data[keys], (config['winsorize']), axis=0)
-        val_data[keys] = winsorize(val_data[keys], (config['winsorize']), axis=0)
         test_data[keys] = winsorize(test_data[keys], (config['winsorize']), axis=0)
+        outer_val_data[keys] = winsorize(outer_val_data[keys], (config['winsorize']), axis=0)
+        val_data[keys] = winsorize(val_data[keys], (config['winsorize']), axis=0)
+        
 
     print('Saving data to: ', config['proc_data_path'])
     train_data.to_csv(config['proc_data_path'] + '_data.csv', index=False)
     test_data.to_csv(config['proc_data_path'] + '_test_data.csv', index=False)
+    outer_val_data.to_csv(config['proc_data_path'] + 'outer_val_data.csv', index=False)
     val_data.to_csv(config['proc_data_path'] + '_val_data.csv', index=False)
 
     print('Loaded training data with size: ', np.shape(train_data))
     print('Loaded test data with size: ', np.shape(test_data))
+    print('Loaded outer-validation data with size: ', np.shape(outer_val_data))
     print('Loaded validation data with size: ', np.shape(val_data))
 
 def load_key_names(data_loc):
