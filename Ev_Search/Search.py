@@ -60,7 +60,7 @@ if args.load == 1:
     
 elif args.load == 0:
     
-    print('Init Population')
+    print('Init Population', args.path)
     pop = Population(config, key_names)
     pop.Evaluate(data, val_data)
    
