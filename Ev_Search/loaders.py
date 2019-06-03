@@ -223,6 +223,18 @@ def process_new_dataset(config):
 
     relevant_data = pd.merge(data,scores)
 
+    keys = list(relevant_data)
+    keys.remove('score')
+    keys.remove('subject')
+
+    if config['covariates']['include_any']:
+        for k in covar_keys:
+            keys.remove(k)
+
+    if config['winsorize'] != None:
+        print('Winzorizing data with', config['winsorize'])
+        relevant_data[keys] = winsorize(relevant_data[keys], (config['winsorize']), axis=0)
+
     print('--Splitting Test Set--')
     train_data, test_data = preform_split(relevant_data, config['test_id_loc'], config['test_sz'], config['random_split_state'])
 
@@ -251,13 +263,6 @@ def process_new_dataset(config):
     elif config['scale_type'] == 'robust':
         scaler = RobustScaler(**config['robust_extra_params'])
 
-    keys = list(train_data)
-    keys.remove('score')
-
-    if config['covariates']['include_any']:
-        for k in covar_keys:
-            keys.remove(k)
-
     if scaler != None:
         print('Scaling data with', config['scale_type'], 'scaling')
         
@@ -269,14 +274,6 @@ def process_new_dataset(config):
             outer_val_data[keys] = scaler.transform(outer_val_data[keys])
         if len(val_data) > 0:
             val_data[keys] = scaler.transform(val_data[keys])
-
-    if config['winsorize'] != None:
-        print('Winzorizing data with', config['winsorize'])
-
-        train_data[keys] = winsorize(train_data[keys], (config['winsorize']), axis=0)
-        test_data[keys] = winsorize(test_data[keys], (config['winsorize']), axis=0)
-        outer_val_data[keys] = winsorize(outer_val_data[keys], (config['winsorize']), axis=0)
-        val_data[keys] = winsorize(val_data[keys], (config['winsorize']), axis=0)
         
 
     print('Saving data to: ', config['proc_data_path'])
