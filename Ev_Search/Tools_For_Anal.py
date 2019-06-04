@@ -3,7 +3,7 @@ from scipy.integrate import simps
 import numpy as np
 import pandas as pd
 import operator
-from Ev_Search.loaders import filter_data
+from loaders import filter_data
 
 class Item():
     def __init__(self, score, feats):
