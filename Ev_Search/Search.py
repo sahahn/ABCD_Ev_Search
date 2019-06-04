@@ -12,6 +12,7 @@ import argparse, pickle, os, sys
 import pandas as pd
 import numpy as np
 
+
 def check_dr(spot):
 
     if os.path.isfile(spot):
