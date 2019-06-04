@@ -174,7 +174,11 @@ def proc_new_files(files):
             name = file.split('.')[0].replace(config['key_name'], '')
             
             if COUNTER[name] < config['num_search_gens']:
-                change_temp_script(name, '1')
+                if config['one_run_mode']:
+                    change_temp_script(name, '0')
+                else:
+                    change_temp_script(name, '1')
+                
                 run_job(config['temp_name'])
             
                 COUNTER[name] += 1
@@ -186,7 +190,11 @@ def proc_new_files(files):
         
         file = files[0]
         if COUNTER['1'] < config['num_search_gens']:
-            change_temp_scripts('1')
+            if config['one_run_mode']:
+                    change_temp_scripts(name, '0')
+                else:
+                    change_temp_scripts(name, '1')
+            
             run_job(config['master_name'])
 
             COUNTER['1'] += 1
@@ -201,7 +209,7 @@ def save_progress():
 def restart_job(name):
     
     #If starting from scratch and counter still == 1
-    if config['preloaded'] == False and COUNTER[name] == 1:
+    if (config['preloaded'] == False and COUNTER[name] == 1) or config['one_run_mode']:
         print('restart job ', name, 'with new')
 
         change_temp_script(name, '0')
@@ -220,7 +228,7 @@ def restart_job(name):
 def restart_jobs():
 
     #If starting from scratch and counter still == 1
-    if config['preloaded'] == False and COUNTER['1'] == 1:
+    if (config['preloaded'] == False and COUNTER['1'] == 1) or config['one_run_mode']:
         print('restart jobs with new')
 
         change_temp_scripts('0')

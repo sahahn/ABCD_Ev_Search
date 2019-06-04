@@ -15,6 +15,10 @@ config['config_loc'] = config['name'] + '.pkl'
 #Optional flag to run everything locally vs. on the VACC
 config['run_local'] = True
 
+#If set to true, then each over-arching search gen will start a new population,
+#and the best indv will be saved automatically at the end of each run (preloaded should be False)
+config['one_run_mode'] = True
+
 
 #GENERAL EV. SEARCH CONFIGS
 #-------------------------

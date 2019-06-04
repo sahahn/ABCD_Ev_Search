@@ -22,6 +22,18 @@ def save_population(pop, location):
     with open(location, 'wb') as output:
         pickle.dump(pop, output, pickle.HIGHEST_PROTOCOL)
 
+def add_best(pop, loc):
+
+    best = pop.get_best_score_indv()
+
+    with open(loc, 'a') as f:
+  
+        f.write(str(best.score) + ': ')
+        feat_names = best.get_key_names()
+        for feat in feat_names:
+            f.write(feat + ',')
+        f.write('\n')
+
 parser = argparse.ArgumentParser(description='Give load/save commands')
 
 parser.add_argument('path', type=str, help='File Path')
@@ -103,6 +115,8 @@ for i in range(1, config['num_gens']):
         if rounds_since < config['early_stop_rounds']:
             pop.Evaluate(data, val_data, type='New')
         else:
+            if config['one_run_mode']:
+                add_best(pop, config['output_best_loc'])
             sys.exit()
     else:
         pop.Evaluate(data, val_data, type='New')
@@ -123,6 +137,9 @@ for i in range(1, config['num_gens']):
 print('Average New Evaluation Time: ', pop.Get_Mean_Eval_Time())
 pop.Print_Scores()
 save_population(pop, args.path)
+
+if config['one_run_mode']:
+    add_best(pop, config['output_best_loc'])
 
 
 
