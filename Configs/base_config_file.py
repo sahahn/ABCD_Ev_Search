@@ -162,6 +162,7 @@ config['raw_data_loc'] = None  #os.path.join(config['data_dr'], 'Raw_ABCD_Struc_
 #Set to None if creating one from provided data
 config['test_id_loc'] = os.path.join(config['data_dr'], 'ABCD_testsetIDs.csv')
 
+#Same as for test and validation
 config['outer_val_id_loc'] = None
 
 #Optionally provide a location contained a saved list of validation set subject ID's
@@ -172,6 +173,7 @@ config['val_id_loc'] = None
 #Optionally split the data by witholding a test set- set size to % of all, 0 for none, see above ^
 config['test_sz'] = 0
 
+#Same as for test and validation
 config['outer_val_sz'] = .1
 
 #Optionally split the training set further by witholding a validation set- set size to % of train, 0 for none
