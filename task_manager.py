@@ -54,7 +54,6 @@ def check_directory():
         return valid_files
 
     else:
-        
         files = [file for file in files if config['key_name'] + '_Output' in file]
         return files
 
@@ -191,9 +190,9 @@ def proc_new_files(files):
         file = files[0]
         if COUNTER['1'] < config['num_search_gens']:
             if config['one_run_mode']:
-                    change_temp_scripts(name, '0')
-                else:
-                    change_temp_scripts(name, '1')
+                change_temp_scripts(name, '0')
+            else:
+                change_temp_scripts(name, '1')
             
             run_job(config['master_name'])
 
