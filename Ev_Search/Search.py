@@ -61,6 +61,7 @@ if config['limit_features_from'] != None:
         else:
             n = int(config['keep_top_x'])
         
+        print('limit to top', n, 'features')        
         top_feats = A.get_sorted_labels(fc, n) + ['score']
         data, val_data = data[top_feats], val_data[top_feats]
 
