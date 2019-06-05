@@ -278,7 +278,7 @@ def process_new_dataset(config):
     print('Saving data to: ', config['proc_data_path'])
     train_data.to_csv(config['proc_data_path'] + '_data.csv', index=False)
     test_data.to_csv(config['proc_data_path'] + '_test_data.csv', index=False)
-    outer_val_data.to_csv(config['proc_data_path'] + 'outer_val_data.csv', index=False)
+    outer_val_data.to_csv(config['proc_data_path'] + '_outer_val_data.csv', index=False)
     val_data.to_csv(config['proc_data_path'] + '_val_data.csv', index=False)
 
     print('Loaded training data with size: ', np.shape(train_data))
