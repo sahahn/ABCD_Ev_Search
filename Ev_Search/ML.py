@@ -62,10 +62,11 @@ def train_light_gbm_regressor(X, y, cv, n_params, test_size=.2, n_jobs=-1):
     
     param_list = list(ParameterSampler(LGBM_params, n_iter=n_params))
     param_scores = []
+
+    int_skf = KFold(n_splits=cv)
     
     for p in range(n_params):
         
-        int_skf = KFold(n_splits=cv)
         best_scs = []
        
         for train_i, test_i in int_skf.split(Xt, yt):

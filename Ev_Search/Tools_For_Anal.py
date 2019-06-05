@@ -3,7 +3,6 @@ from scipy.integrate import simps
 import numpy as np
 import pandas as pd
 import operator
-from loaders import filter_data
 
 class Item():
     def __init__(self, score, feats):
@@ -140,14 +139,27 @@ def get_sorted_labels(fc, top):
     return labels
             
 
-def load_saved(train_loc, val_loc, i_keys):
+def load_saved(train_loc, val_loc, i_keys, return_df=False):
 
-    if 'score' not in i_keys:
-        i_keys += ['score']
+    if type(train_loc) == list:
+        dfs = [pd.read_csv(t) for t in train_loc]
+        train = pd.concat(dfs)
 
-    train = pd.read_csv(train_loc)[i_keys]
-    val = pd.read_csv(val_loc)[i_keys]
+    else:
+        train = pd.read_csv(train_loc)
     
+    val = pd.read_csv(val_loc)
+
+    if i_keys != None:
+        if 'score' not in i_keys:
+            i_keys += ['score']
+
+        train = train[i_keys]
+        val = val[i_keys]
+
+    if return_df:
+        return train, val
+
     X,y = np.array(train.drop('score', axis=1)), np.array(train.score)
     X_val,y_val = np.array(val.drop('score', axis=1)), np.array(val.score)
 

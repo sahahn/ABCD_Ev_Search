@@ -57,7 +57,7 @@ if config['limit_features_from'] != None:
         fc, feat_count = A.get_weighted_feature_counts(items, score_lim=config['feature_score_lim'])
         
         if config['keep_top_x'] < 1:
-            n = int(len(data) // config['keep_top_x'])
+            n = int(len(data) * config['keep_top_x'])
         else:
             n = int(config['keep_top_x'])
         
