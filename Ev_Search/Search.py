@@ -118,7 +118,12 @@ for i in range(1, config['num_gens']):
             pop.Evaluate(data, val_data, type='New')
         else:
             if config['one_run_mode']:
+                #Reload the best pop                
+                with open(args.path, 'rb') as output:
+                    pop = pickle.load(output)
+ 
                 add_best(pop, config['output_best_loc'])
+
             sys.exit()
     else:
         pop.Evaluate(data, val_data, type='New')
